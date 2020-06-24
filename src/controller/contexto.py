@@ -4,6 +4,7 @@ from src.model.includes import Includes
 class Contexto:
     def __init__(self, arquivo:Arquivo):
         self.arquivo = arquivo
+        self.ponteiro = ()
         self.includes = []
 
     def listIncludes(self):

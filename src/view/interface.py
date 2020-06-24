@@ -1,12 +1,14 @@
 from src.view.keylistener import KeyListener,Keys
 from src.view.janela import Janela
 from src.controller.contexto import Contexto
+from src.controller.appcontext import AppContext
 
 class Interface:
     '''
     Classe da interface principal do app, que suportará janelas.
     '''
-    def __init__(self, listContextos):
+    def __init__(self, listContextos, appContext : AppContext):
+        self.app = appContext
         self.keylistener = KeyListener(self)
         self.janelas = []
         self.janelaAtiva = -1

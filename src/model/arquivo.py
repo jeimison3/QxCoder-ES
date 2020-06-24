@@ -5,7 +5,7 @@ class Arquivo:
 
     def __init__(self,local):
         self.local = local
-        self.conteudo = ""
+        self.conteudo = []
 
     def setConteudo(self, valor):
         '''
@@ -13,7 +13,7 @@ class Arquivo:
         '''
         self.conteudo = valor
 
-    def getConteudo(self, valor):
+    def getConteudo(self):
         '''
         Retorna conteúdo do arquivo\n
         @return Conteúdo
@@ -26,7 +26,7 @@ class Arquivo:
         @return Conteúdo
         '''
         #...
-        self.conteudo = ""
+        self.conteudo = []
         return self.conteudo
 
         

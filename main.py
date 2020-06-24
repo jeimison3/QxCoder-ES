@@ -16,5 +16,5 @@ if __name__ == '__main__':
     print("Local do projeto: %s" % (app.filedelivery.projectPath))
 
     contextos = app.open(arquivos)
-    interface = Interface(contextos)
+    interface = Interface(contextos, app)
 
