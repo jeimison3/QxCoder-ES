@@ -1,5 +1,6 @@
 class Arquivo:
     '''
+    Classe para manipular um unico aquivo
     @param Local do arquivo
     '''
 
@@ -25,8 +26,10 @@ class Arquivo:
         Lê e retorna conteúdo do arquivo\n
         @return Conteúdo
         '''
-        #...
-        self.conteudo = []
+        with open(self.local, 'r', encoding= 'utf-8') as arq_entrada:
+            for coisa in arq_entrada:
+                self.conteudo.append(coisa)
+        
         return self.conteudo
 
         
