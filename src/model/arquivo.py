@@ -7,6 +7,7 @@ class Arquivo:
     def __init__(self,local):
         self.local = local
         self.conteudo = []
+        self.ler()
 
     def setConteudo(self, valor):
         '''

@@ -7,18 +7,20 @@ class AppContext:
     @param isNew : True para novo projeto, False para abrindo projeto\n
     @param projectPath : Local do projeto
     '''
-    def __init__(self, isNew : bool, projectPath:str):
+    def __init__(self, isNew : bool):
         self.isNew = isNew
-        self.filedelivery = FileDelivery(projectPath)
+        self.arquivosErros = []
+        self.filedelivery = FileDelivery()
         self.contextdelivery = ContextDelivery()
 
-    def open(self, listFiles:list):
+    def open(self, pathcall:str, listFiles:list):
         '''
         Retorna List de Contexto de todos arquivos do projeto.\n
         @param List com nome de todos arquivos do projeto
         '''
-        for arq in listFiles:
-            self.openContexto(arq) # Abre Contexto para cada arquivo
+        self.openContexto(pathcall, listFiles)
+        # for arq in listFiles:
+        #     self.openContexto(pathcall,arq) # Abre Contexto para cada arquivo
         return self.contextdelivery.contextos
 
     def getWorkspaceSettings(self, filename):
@@ -32,7 +34,7 @@ class AppContext:
         return obj[filename]
 
 
-    def whiteWorkspaceSettings(self, filename, linha, coluna)
+    def whiteWorkspaceSettings(self, filename, linha, coluna):
         '''
         Escreve no arquivo .json as configurações do arquivo em questão\n
         @param Nome do arquivo, linha e coluna do cursor\n
@@ -66,26 +68,33 @@ class AppContext:
                 json.dump(obj, arq, indent = 4)
             
 
-    def openArquivo(self, filename):
+    def openArquivo(self, path, filename):
         '''
         @param Nome do arquivo\n
         @return Arquivo instanciado
         '''
-        return self.filedelivery.open(filename)
+        return self.filedelivery.open(path,filename)
 
-    def openContexto(self, filename):
+    def openContexto(self, pathCall, filename):
         '''
         Retorna contexto de arquivo e includes dele.\n
         @param Nome do arquivo\n
         @return Contexto instanciado
         '''
-        arquivo = self.openArquivo(filename) # Pega Arquivo
+        arquivo = self.openArquivo(pathCall,filename) # Pega Arquivo
+        if arquivo == None:
+            self.arquivosErros.append( (filename, "Erro ao abrir arquivo: não encontrado.") )
+            return
         contexto = self.contextdelivery.open(arquivo) # Pega Contexto
-        includeNames = contexto.listIncludes() # Pega list com local dos includes
-        listaDosIncludesEmArquivos = []
+        includeNames = contexto.getIncludesNames() # Pega list com local dos includes
+        
         for includeName in includeNames:
-            listaDosIncludesEmArquivos.append( self.openArquivo( includeName ) ) # Pega Arquivo para cada include encontrado
-        contexto.includes = listaDosIncludesEmArquivos # Atribui list de Arquivo dos includes ao Contexto
+            arqv = self.openArquivo( arquivo.local, includeName )
+            if arqv == None:
+                self.arquivosErros.append( (includeName, "Erro ao incluir arquivo: não encontrado.") )
+            else:
+                contexto.addInclude( arqv ) # Pega Arquivo para cada include encontrado
+        
         return contexto
 
     

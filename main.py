@@ -9,12 +9,19 @@ if __name__ == '__main__':
     arquivos = ["exemplo/teste.c"] # Temporário
 
     if len(arquivos) == 0:
-        app = AppContext(True, File.userPath()) # Novo projeto
+        app = AppContext(True) # Novo projeto
     else:
-        app = AppContext(False, File.splitFilePath(arquivos[0])[0]) # Abrindo projeto
+        app = AppContext(False) # Abrindo projeto
+        for arq in arquivos:
 
-    print("Local do projeto: %s" % (app.filedelivery.projectPath))
+            pathname, filename = File.splitFilePath(arq) 
+            app.open(pathname,filename)
 
-    contextos = app.open(arquivos)
-    interface = Interface(contextos, app)
+    print( app.arquivosErros )
+
+    for i in app.contextdelivery.contextos:
+        print("Arquivo lido:",i.arquivo.local)
+        for j in i.includes:
+            print("|=>",j.local)
+    interface = Interface(app.contextdelivery.contextos, app)
 

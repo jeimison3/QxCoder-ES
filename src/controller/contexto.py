@@ -7,5 +7,8 @@ class Contexto:
         self.ponteiro = ()
         self.includes = []
 
-    def listIncludes(self):
+    def getIncludesNames(self):
         return Includes.listar(self.arquivo)
+
+    def addInclude(self, arqv : Arquivo):
+        self.includes.append(arqv)
