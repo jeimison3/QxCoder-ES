@@ -27,9 +27,10 @@ class Arquivo:
         Lê e retorna conteúdo do arquivo\n
         @return Conteúdo
         '''
-        with open(self.local, 'r', encoding= 'utf-8') as arq_entrada:
+        with open(self.local, 'r', encoding = 'utf-8') as arq_entrada:
             for coisa in arq_entrada:
-                self.conteudo.append(coisa)
+                temp = coisa.rstrip("\n")
+                self.conteudo.append(temp)
         
         return self.conteudo
 
@@ -38,4 +39,10 @@ class Arquivo:
         '''
         Salva conteúdo do arquivo.
         '''
+        nova = []
+        for item in self.conteudo:
+            nova.append(item + "\n")
+        with open(self.local, 'w', encoding = 'utf-8') as arq_entrada:
+            for item in nova:
+                arq.write(item)
         pass
