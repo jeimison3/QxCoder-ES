@@ -16,4 +16,4 @@ class Contexto:
 
     def save(self):
         self.arquivo.salvar()
-        self.app.castWSSettingsW(arquivo, self.ponteiro)
+        self.app.castWSSettingsW(self.arquivo.local, self.ponteiro)

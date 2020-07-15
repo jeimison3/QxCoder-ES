@@ -34,6 +34,7 @@ class Arquivo:
             for coisa in arq_entrada:
                 temp = coisa.rstrip("\n")
                 self.conteudo.append(temp)
+            arq_entrada.close()
         
         return self.conteudo
 
@@ -45,7 +46,8 @@ class Arquivo:
         nova = []
         for item in self.conteudo:
             nova.append(item + "\n")
-        with open(self.local, 'w', encoding = 'utf-8') as arq_entrada:
+        with open(self.local, 'w', encoding = 'utf-8') as arq_escrita:
             for item in nova:
-                arq.write(item)
+                arq_escrita.write(item)
+            arq_escrita.close()
         pass
