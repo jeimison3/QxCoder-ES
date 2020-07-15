@@ -5,16 +5,23 @@ class FileDelivery:
     def __init__(self):
         self.files = []
 
-    def open(self, who, where):
+    def open(self, who, where, canCreate : bool = False):
         for arqv in self.files:
             absWhere = File.getAbsPath(who,where)
-            print("$ FILE INPUT [%s] @ %s" % (where,absWhere))
+            print("$ FileDelivery OPEN [%s] @ %s" % (where,absWhere))
             if absWhere == arqv.local:
                 return arqv
         absNewWhere = File.getAbsPath(who,where)
+        
         if File.arquivoExiste(absNewWhere):
             novo = Arquivo(absNewWhere)
             self.files.append(novo)
             return novo
+
+        elif canCreate:
+            novo = Arquivo(absNewWhere, True)
+            self.files.append(novo)
+            return novo
+
         else:
             return None

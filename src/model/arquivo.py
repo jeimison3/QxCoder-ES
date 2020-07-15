@@ -1,13 +1,16 @@
+from src.util.file import File
+
 class Arquivo:
     '''
     Classe para manipular um unico aquivo
     @param Local do arquivo
     '''
 
-    def __init__(self,local):
+    def __init__(self,local,novo:bool=False):
         self.local = local
         self.conteudo = []
-        self.ler()
+        if not novo:
+            self.ler()
 
     def setConteudo(self, valor):
         '''

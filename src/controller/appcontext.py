@@ -4,23 +4,18 @@ from src.controller.contextdelivery import ContextDelivery
 class AppContext:
     '''
     Cria deliveries de cada serviço consumido.\n
-    @param isNew : True para novo projeto, False para abrindo projeto\n
-    @param projectPath : Local do projeto
     '''
-    def __init__(self, isNew : bool):
-        self.isNew = isNew
+    def __init__(self):
         self.arquivosErros = []
         self.filedelivery = FileDelivery()
         self.contextdelivery = ContextDelivery()
 
-    def open(self, pathcall:str, listFiles:list):
+    def open(self, pathcall:str, arquivo:str, canCreate : bool = False):
         '''
-        Retorna List de Contexto de todos arquivos do projeto.\n
-        @param List com nome de todos arquivos do projeto
+        Retorna Contexto do arquivo.\n
+        @param Nome do arquivo
         '''
-        self.openContexto(pathcall, listFiles)
-        # for arq in listFiles:
-        #     self.openContexto(pathcall,arq) # Abre Contexto para cada arquivo
+        self.openContexto(pathcall, arquivo, canCreate)
         return self.contextdelivery.contextos
 
     def getWorkspaceSettings(self, filename):
@@ -68,20 +63,20 @@ class AppContext:
                 json.dump(obj, arq, indent = 4)
             
 
-    def openArquivo(self, path, filename):
+    def openArquivo(self, path, filename, canCreate : bool = False):
         '''
         @param Nome do arquivo\n
         @return Arquivo instanciado
         '''
-        return self.filedelivery.open(path,filename)
+        return self.filedelivery.open(path,filename,canCreate)
 
-    def openContexto(self, pathCall, filename):
+    def openContexto(self, pathCall, filename, canCreate : bool = False):
         '''
         Retorna contexto de arquivo e includes dele.\n
         @param Nome do arquivo\n
         @return Contexto instanciado
         '''
-        arquivo = self.openArquivo(pathCall,filename) # Pega Arquivo
+        arquivo = self.openArquivo(pathCall,filename,canCreate) # Pega Arquivo
         if arquivo == None:
             self.arquivosErros.append( (filename, "Erro ao abrir arquivo: não encontrado.") )
             return

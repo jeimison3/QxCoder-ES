@@ -6,18 +6,17 @@ from src.util.file import File
 
 if __name__ == '__main__':
     arquivos = sys.argv[1:]
-    arquivos = ["exemplo/teste.c"] # Temporário
 
     if len(arquivos) == 0:
-        app = AppContext(True) # Novo projeto
-    else:
-        app = AppContext(False) # Abrindo projeto
-        for arq in arquivos:
+        arquivos = ["exemplo/teste.c"] # Temporário
 
-            pathname, filename = File.splitFilePath(arq) 
-            app.open(pathname,filename)
+    app = AppContext() # Abrindo projeto
+    for arq in arquivos:
+        pathname, filename = File.splitFilePath(arq) 
+        app.open(pathname,filename,True)
+        
 
-    print( app.arquivosErros )
+    print("ERR=", app.arquivosErros )
 
     for i in app.contextdelivery.contextos:
         print("Arquivo lido:",i.arquivo.local)
