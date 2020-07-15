@@ -11,6 +11,10 @@ class AppContext:
         self.filedelivery = FileDelivery()
         self.contextdelivery = ContextDelivery(self)
 
+    def finalizar(self):
+        self.contextdelivery.savePointers()
+        print('Finalizado.')
+
     def open(self, pathcall:str, arquivo:str, canCreate : bool = False):
         '''
         Retorna Contexto do arquivo.\n

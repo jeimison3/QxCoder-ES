@@ -14,6 +14,9 @@ class Contexto:
     def addInclude(self, arqv : Arquivo):
         self.includes.append(arqv)
 
+    def savePointer(self):
+        self.app.castWSSettingsW(self.arquivo.local, self.ponteiro)
+
     def save(self):
         self.arquivo.salvar()
-        self.app.castWSSettingsW(self.arquivo.local, self.ponteiro)
+        self.savePointer()
