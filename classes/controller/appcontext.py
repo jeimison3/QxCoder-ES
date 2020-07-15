@@ -12,7 +12,7 @@ class AppContext:
         self.contextdelivery = ContextDelivery(self)
 
     def finalizar(self):
-        self.contextdelivery.savePointers()
+        # self.contextdelivery.savePointers()
         print('Finalizado.')
 
     def open(self, pathcall:str, arquivo:str, canCreate : bool = False):
