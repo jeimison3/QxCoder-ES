@@ -16,8 +16,7 @@ class AppContext:
         Retorna Contexto do arquivo.\n
         @param Nome do arquivo
         '''
-        self.openContexto(pathcall, arquivo, canCreate)
-        return self.contextdelivery.contextos
+        return self.openContexto(pathcall, arquivo, canCreate)
 
     def getWorkspaceSettings(self, filename):
         '''
@@ -70,7 +69,7 @@ class AppContext:
         self.writeWorkspaceSettings(local, ponteiro[0], ponteiro[1])
 
     def castWSSettingsR(self,local):
-        ponto = (0,0)
+        ponto = [0,0]
         sett = self.getWorkspaceSettings(local)
         if sett != None:
             if 'linha' in sett:
