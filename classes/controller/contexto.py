@@ -6,6 +6,11 @@ class Contexto:
         self.arquivo = arquivo
         self.app = app # AppContext
         self.ponteiro = app.castWSSettingsR(arquivo)
+
+        if self.ponteiro[0]+1 > len(self.arquivo.conteudo):
+            self.ponteiro[0] = len(self.arquivo.conteudo)-1
+        if self.ponteiro[1]+1 > len(self.arquivo.conteudo[self.ponteiro[0]]):
+            self.ponteiro[1] = len(self.arquivo.conteudo[self.ponteiro[0]])-1
         self.includes = []
 
     def getIncludesNames(self):

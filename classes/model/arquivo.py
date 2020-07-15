@@ -8,7 +8,7 @@ class Arquivo:
 
     def __init__(self,local,novo:bool=False):
         self.local = local
-        self.conteudo = []
+        self.conteudo = [""]
         if not novo:
             self.ler()
 
