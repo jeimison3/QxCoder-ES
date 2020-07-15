@@ -1,5 +1,5 @@
-from src.model.arquivo import Arquivo
-from src.util.file import File
+from classes.model.arquivo import Arquivo
+from classes.util.file import File
 
 class FileDelivery:
     def __init__(self):

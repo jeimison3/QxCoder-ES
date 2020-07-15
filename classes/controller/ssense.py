@@ -1,4 +1,4 @@
-from src.controller.contexto import Contexto
+from classes.controller.contexto import Contexto
 
 class SSense: # Equivalente ao IntelliSense
     '''

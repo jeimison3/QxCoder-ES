@@ -1,5 +1,6 @@
-from src.controller.filedelivery import FileDelivery
-from src.controller.contextdelivery import ContextDelivery
+import json
+from classes.controller.filedelivery import FileDelivery
+from classes.controller.contextdelivery import ContextDelivery
 
 class AppContext:
     '''
@@ -8,7 +9,7 @@ class AppContext:
     def __init__(self):
         self.arquivosErros = []
         self.filedelivery = FileDelivery()
-        self.contextdelivery = ContextDelivery()
+        self.contextdelivery = ContextDelivery(self)
 
     def open(self, pathcall:str, arquivo:str, canCreate : bool = False):
         '''
@@ -26,10 +27,12 @@ class AppContext:
         '''
         with open("config.json", "r") as arq:
             obj = json.load(arq)
-        return obj[filename]
+            if filename in obj:
+                return obj[filename]
+        return None
 
 
-    def whiteWorkspaceSettings(self, filename, linha, coluna):
+    def writeWorkspaceSettings(self, filename, linha, coluna):
         '''
         Escreve no arquivo .json as configurações do arquivo em questão\n
         @param Nome do arquivo, linha e coluna do cursor\n
@@ -61,6 +64,20 @@ class AppContext:
             # Reescrevo no arquivo o obj atualizado
             with open("config.json", "w") as arq:
                 json.dump(obj, arq, indent = 4)
+
+
+    def castWSSettingsW(self,local,ponteiro):
+        self.writeWorkspaceSettings(local, ponteiro[0], ponteiro[1])
+
+    def castWSSettingsR(self,local):
+        ponto = (0,0)
+        sett = self.getWorkspaceSettings(local)
+        if sett != None:
+            if 'linha' in sett:
+                ponto[0] = sett['linha']
+            if 'coluna' in sett:
+                ponto[1] = sett['coluna']
+        return ponto
             
 
     def openArquivo(self, path, filename, canCreate : bool = False):
@@ -92,4 +109,6 @@ class AppContext:
         
         return contexto
 
+    def saveAll(self):
+        self.contextdelivery.saveAll()
     

@@ -1,4 +1,4 @@
-from src.util.file import File
+from classes.util.file import File
 
 class Arquivo:
     '''

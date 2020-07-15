@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../exemplos/structs.h"
+#include "../exemplo/structs.h"
 
 int main(){
     int x = 2;

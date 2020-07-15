@@ -1,7 +1,7 @@
-from src.view.keylistener import KeyListener,Keys
-from src.view.janela import Janela
-from src.controller.contexto import Contexto
-from src.controller.appcontext import AppContext
+from classes.view.keylistener import KeyListener,Keys
+from classes.view.janela import Janela
+from classes.controller.contexto import Contexto
+from classes.controller.appcontext import AppContext
 
 import curses
 import threading

@@ -1,5 +1,5 @@
-from src.view.keylistener import Keys
-from src.controller.contexto import Contexto
+from classes.view.keylistener import Keys
+from classes.controller.contexto import Contexto
 
 import curses
 

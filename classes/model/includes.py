@@ -1,5 +1,5 @@
-from src.model.cprocessor import CProcessor
-from src.model.arquivo import Arquivo
+from classes.model.cprocessor import CProcessor
+from classes.model.arquivo import Arquivo
 
 
 class Includes:
