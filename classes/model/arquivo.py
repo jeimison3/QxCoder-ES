@@ -8,7 +8,7 @@ class Arquivo:
 
     def __init__(self,local,novo:bool=False):
         self.local = local
-        self.conteudo = [""]
+        self.conteudo = []
         if not novo:
             self.ler()
 
@@ -30,11 +30,17 @@ class Arquivo:
         Lê e retorna conteúdo do arquivo\n
         @return Conteúdo
         '''
+        temp = []
         with open(self.local, 'r', encoding = 'utf-8') as arq_entrada:
-            for coisa in arq_entrada:
-                temp = coisa.rstrip("\n")
-                self.conteudo.append(temp)
+            temp = arq_entrada.readlines()
             arq_entrada.close()
+
+        if "\n" in temp[len(temp) - 1]:
+            temp.append('')
+
+        for item in temp:
+            self.conteudo.append(item.rstrip("\n"))
+        
         
         return self.conteudo
 
@@ -43,11 +49,7 @@ class Arquivo:
         '''
         Salva conteúdo do arquivo.
         '''
-        nova = []
-        for item in self.conteudo:
-            nova.append(item + "\n")
         with open(self.local, 'w', encoding = 'utf-8') as arq_escrita:
-            for item in nova:
-                arq_escrita.write(item)
+            arq_escrita.write("\n".join(self.conteudo))
             arq_escrita.close()
         pass
