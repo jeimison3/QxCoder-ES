@@ -15,6 +15,8 @@ class Interface:
         self.janelas = []
         self.janelaAtiva = 0
         self.contextos = listContextos
+        
+
 
         #WIns
         self.mainScreen = curses.initscr() #Janela principal
@@ -40,31 +42,40 @@ class Interface:
         curses.init_pair(2,curses.COLOR_BLACK,curses.COLOR_WHITE)
         curses.init_pair(3,curses.COLOR_BLUE,curses.COLOR_BLACK)
         curses.init_pair(4,curses.COLOR_CYAN,curses.COLOR_BLACK)
-
+        #curses.init_pair(4,curses.COLOR_WHITE,curses.COLOR_CYAN)
+        curses.init_pair(5,curses.COLOR_BLACK,curses.COLOR_WHITE)
         self.COLOR_BLUE_PAIR = 3
+        
         #Criando janelas
         
         for contexto in listContextos:
             self.criarJanela(contexto)
         
         #Cursor
-        
+        curses.curs_set(0)
         #Thread Keyboard
        
         self.lastPC = None
         self.lastNPC = None
         self.lastWold = None
 
-        self.lines = [" "]
+        #self.lines = [" "]
 
         self.mainScreen.keypad(True)
         self.keylistener = KeyListener(self)
         #kList = threading.Thread(target=self.keylistener.keyListenerThread,name="klthread")
 
         self.drawMainWin()
-       # kList.start()
+        #kList.start()
         self.keylistener.keyListenerThread()
+        
+        self.mainScreen.clear()
+        self.footer.clear()
+        self.tab.clear()
+        
         curses.endwin()
+        
+
         
 
     def atalhoTrigger(self, key : Keys):
@@ -89,17 +100,9 @@ class Interface:
     
     def drawMainWin(self):
 
-        #cursor off
-
-        #curses.curs_set(0)
-
-        #Limpando
-        #self.mainScreen.clear()
-        #self.footer.clear()
-        #self.tab.clear()
 
         self.mainScreen.move(0,0)
-        self.footer.move(0,0)
+        #self.footer.move(0,0)
         self.tab.move(0,0)
 
         #Iniciando - Verificando erros de tamanho        
@@ -110,57 +113,57 @@ class Interface:
         #header
         self.tab.resize(1,Width)
     
-        self.tab.mvwin(Height-2,0)
+        self.tab.mvwin(Height-1,0)
         
         
         #-------------------------------FOOTER
-        self.footer.resize(1,Width)        
+        #self.footer.resize(1,Width)        
         
-        self.footer.mvwin(Height-1,0)
+        #self.footer.mvwin(Height-1,0)
         
 
-        footerSize = 0
+        #footerSize = 0
 
-        for i in self.ops:
+        #for i in self.ops:
 
-            footerSize = footerSize + len(i)
+        #    footerSize = footerSize + len(i)
 
-        if self.SELECTED != self.OP_SELECTED:
+        #if self.SELECTED != self.OP_SELECTED:
 
-            for i in self.ops:
+        #    for i in self.ops:
 
-                self.footer.addstr(i)
-        else:
-            counter = 0
-            for i in self.ops:
+        #        self.footer.addstr(i)
+        #else:
+        #    counter = 0
+        #    for i in self.ops:
 
-                if counter == self.OPTION:
-                    self.footer.attron(curses.color_pair(2))
-                    self.footer.addstr(i)
-                    self.footer.attroff(curses.color_pair(2))
-                else:
-                    self.footer.addstr(i)
-                counter = counter + 1
+        #        if counter == self.OPTION:
+        #            self.footer.attron(curses.color_pair(2))
+        #            self.footer.addstr(i)
+        #            self.footer.attroff(curses.color_pair(2))
+        #        else:
+        #            self.footer.addstr(i)
+        #        counter = counter + 1
         #TAB
         #self.tab.move(0,0)
-        if self.SELECTED == self.TAB_SELECTED:
+        #if self.SELECTED == self.TAB_SELECTED:
             #self.tab.attron(curses.color_pair(2))
-            self.tab.addstr("*"+self.janelas[self.janelaAtiva].contexto.arquivo.local,Width-1)
+        #    self.tab.addstr("*"+self.janelas[self.janelaAtiva].contexto.arquivo.local,Width-1)
             #self.tab.attroff(curses.color_pair(2))
-        else:
-            self.tab.addstr(self.janelas[self.janelaAtiva].contexto.arquivo.local,Width-1)
+        #else:
+        #    self.tab.addstr(self.janelas[self.janelaAtiva].contexto.arquivo.local,Width-1)
 
 
 
        
         
-        
+        self.tab.addstr(self.janelas[self.janelaAtiva].contexto.arquivo.local,Width-1)
         self.mainScreen.refresh()
-        self.footer.refresh()
+        #self.footer.refresh()
         self.tab.refresh()
         #self.editor.refresh(0, 0, 0, 0, Height, Width)
         #Editor
-        self.editor.resize(Height-2,Width)
+        self.editor.resize(Height-1,Width)
         self.janelas[self.janelaAtiva].drawEditor()
         #Curso on
         #curses.curs_set(1)
@@ -185,49 +188,49 @@ class Interface:
         
         
         #-------------------------------FOOTER
-        self.footer.resize(1,Width)        
+        #self.footer.resize(1,Width)        
         
-        self.footer.mvwin(Height-1,0)
+        #self.footer.mvwin(Height-1,0)
         
 
-        footerSize = 0
+        #footerSize = 0
 
-        for i in self.ops:
+        #for i in self.ops:
+        #
+        #    footerSize = footerSize + len(i)
 
-            footerSize = footerSize + len(i)
+        #if self.SELECTED != self.OP_SELECTED:
 
-        if self.SELECTED != self.OP_SELECTED:
+        #    for i in self.ops:
 
-            for i in self.ops:
-
-                self.footer.addstr(i)
-        else:
-            counter = 0
-            for i in self.ops:
-
-                if counter == self.OPTION:
-                    self.footer.attron(curses.color_pair(2))
-                    self.footer.addstr(i)
-                    self.footer.attroff(curses.color_pair(2))
-                else:
-                    self.footer.addstr(i)
-                counter = counter + 1
+        #        self.footer.addstr(i)
+        #else:
+        #    counter = 0
+        #   for i in self.ops:
+        #
+        #       if counter == self.OPTION:
+        #           self.footer.attron(curses.color_pair(2))
+        #            self.footer.addstr(i)
+        #            self.footer.attroff(curses.color_pair(2))
+        #        else:
+        #            self.footer.addstr(i)
+        #        counter = counter + 1
         #TAB
         #self.tab.move(0,0)
-        if self.SELECTED == self.TAB_SELECTED:
+        #if self.SELECTED == self.TAB_SELECTED:
             #self.tab.attron(curses.color_pair(2))
-            self.tab.addstr("*"+self.janelas[self.janelaAtiva].contexto.arquivo.local,Width-1)
+        #     self.tab.addstr("*"+self.janelas[self.janelaAtiva].contexto.arquivo.local,Width-1)
             #self.tab.attroff(curses.color_pair(2))
-        else:
-            self.tab.addstr(self.janelas[self.janelaAtiva].contexto.arquivo.local,Width-1)
-
+        #else:
+        #    self.tab.addstr(self.janelas[self.janelaAtiva].contexto.arquivo.local,Width-1)
+        self.tab.addstr(self.janelas[self.janelaAtiva].contexto.arquivo.local,Width-1)
 
 
        
         
         
         self.mainScreen.refresh()
-        self.footer.refresh()
+        #self.footer.refresh()
         self.tab.refresh()
         #self.editor.refresh(0, 0, 0, 0, Height, Width)
         #Editor
