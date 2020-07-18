@@ -13,10 +13,14 @@ if __name__ == '__main__':
         arquivos = ["exemplo/teste.c"] # Temporário
         # arquivos = ["main.c"]
 
-    app = AppContext() # Abrindo projeto
-    for arq in arquivos:
-        pathname, filename = File.splitFilePath(arq) 
-        app.open(pathname,filename,True)
+    try:
+        app = AppContext() # Abrindo projeto
+        for arq in arquivos:
+            pathname, filename = File.splitFilePath(arq) 
+            app.open(pathname,filename,True)
+    except Exception as e:
+        print('Erro no processamento do contexto.')
+        raise e
 
 
     # Tratamento de fechamento
@@ -26,10 +30,17 @@ if __name__ == '__main__':
         sys.exit(0)
     signal.signal(signal.SIGINT, signal_handler)
         
-
+    
     for i in app.contextdelivery.contextos:
         print("Arquivo lido:",i.arquivo.local)
         for j in i.includes:
             print("|=>",j.local)
-    interface = Interface(app.contextdelivery.contextos, app)
+    
+    try:
+        interface = Interface(app.contextdelivery.contextos, app)
+    except Exception as e:
+        curses.endwin()
+        print('Erro na interface:')
+        raise e
+        sys.exit(0)
 

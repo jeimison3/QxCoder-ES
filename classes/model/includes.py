@@ -16,6 +16,8 @@ class Includes:
         for linha in arquivo.conteudo:
             if str(linha).find('#include') >= 0:
                 ret = CProcessor.getConteudoEntre(str(linha),"\"")
+                if ret == None:
+                    ret = CProcessor.getConteudoEntre(str(linha),"<",">")
                 if ret != None:
                     print('inc:',ret)
                     lista.append(ret)

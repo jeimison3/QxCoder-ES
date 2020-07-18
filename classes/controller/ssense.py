@@ -1,4 +1,4 @@
-from classes.controller.contexto import Contexto
+from classes.model.deepssense import DeepSSense,CodeCompletion
 
 class SSense: # Equivalente ao IntelliSense
     '''
@@ -6,24 +6,37 @@ class SSense: # Equivalente ao IntelliSense
     @param Contexto
     '''
 
-    def __init__(self, contexto : Contexto):
+    def __init__(self, contexto):
         self.contexto = contexto # Irá analisar o conteudo dos arquivos
+        self.dess = DeepSSense(contexto)
 
-    def deepAnalise(self, trecho):
-        # Percorre cada arquivo do contexto
-        return ["...","...","..."]
+    def update(self,arquivo):
+        self.dess.updateArquivo(arquivo)
 
-    def getSugestao(self, trecho):
+    def getSugestao(self,trecho='APAGAR ESTE PARÂMETRO'):
         '''
-        Sugere complemento do código com base no contexto.\n
-        @param Linha do código a ser completada
+        Busca sugestões mais provaveis e retorna.\n
+        @return [
+            'complemento':'intf(',
+            'sugestoes':[{
+                'nome':'printf',
+                'params':[('char *','str'),('...','args')]
+            },
+            ...
+            ]
+        ]\n
+        { 'complemento' as String, 'sugestoes' as CodeCompletion[] }
         '''
+        self.dess.updateArquivo(self.contexto.arquivo) # Notifica que código foi editado
+        
+        listaBuscaBinaria = self.dess.funcoes + self.dess.typedefs + self.dess.structs + self.dess.variaveis
+        
+        # Implementa a busca binária e retorna a lista
 
-        possiveisSugestoes = self.deepAnalise(trecho)
-
+        
         # Organiza as sugestões num array, 0: mais possível, 1: segundo mais possível...
 
-        # Retorna
+        # Retorna na forma da estrutura 
         return [
             {
                 'complemento':'rintf(',
