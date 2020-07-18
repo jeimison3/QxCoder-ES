@@ -43,12 +43,17 @@ class CProcessor:
                     eliminarFim = eliminarComeco
 
                     if comentarioAberto: # Se já definido
+                        eliminarFim = eliminarComeco+1 # Bug 1 (fim das linhas passando)
                         eliminarComeco = 0 # Eliminar desde começo
 
-                    if '/*' in i and ( not ( '\\/*' in i and ( i.index('/*') -1 == i.index('\\/*') )) ): # Se comentário foi aberto na linha (e não for uma string)
+                    if '/*' in i: # Se comentário foi aberto na linha
+                        if eliminarFim == eliminarComeco:
+                            eliminarFim = eliminarFim+1 # Bug 2 (fim das linhas passando 2)
                         eliminarComeco = i.index('/*')
                         comentarioAberto = True
                     if ('*/' in i) and comentarioAberto: # Se comentário foi fechado na linha
+                        if eliminarFim == eliminarComeco+1:
+                            eliminarComeco = eliminarComeco-1 # Bug 1 (fim das linhas passando)
                         eliminarFim = i.index('*/')+2
                         comentarioAberto = False
                     i = i[:eliminarComeco] + i[eliminarFim:]

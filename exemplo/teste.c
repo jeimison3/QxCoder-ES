@@ -9,6 +9,10 @@
 
 // /* Teste de comentário 5 */ /* Teste de comentário 6 */
 
+/*ABCDE
+Teste de comentário 6.1
+FGHIJ*/
+
 void funcao(int i, int j){
     return i+j;
 }
