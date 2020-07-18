@@ -6,7 +6,7 @@ class Contexto:
     def __init__(self, arquivo:Arquivo, app):
         self.arquivo = arquivo
         self.app = app # AppContext
-        self.ponteiro = app.castWSSettingsR(arquivo)
+        self.ponteiro = app.castWSSettingsR(arquivo.local)
 
         # if self.ponteiro[0]+1 > len(self.arquivo.conteudo):
         #     self.ponteiro[0] = len(self.arquivo.conteudo)-1

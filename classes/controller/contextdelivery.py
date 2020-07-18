@@ -6,6 +6,7 @@ class ContextDelivery:
         self.contextos = []
 
     def saveAll(self):
+        print('Salvando.')
         for c in self.contextos:
             c.save()
     
