@@ -24,6 +24,8 @@ class Janela:
 
         
         self.reserved = ["int","float","double","struct","union","char","void","if","else","return","for","while"]
+        
+        self.macros = ["#define","#include","#pragma","#ifdef","#ifndef","#else"]
 
         self.tabSize = 4
 
@@ -31,10 +33,13 @@ class Janela:
 
         self.SS = SSense(self.contexto)
         
-
+        self.format = formating(self)
+        
+        self.flag_MC = False
+        
     def showPrompt(self):
 
-        self.screen.attron(curses.color_pair(2))
+        self.screen.attron(curses.color_pair(4))
 
         c = len(self.dftText(self.ponteiro[1]))
         
@@ -44,7 +49,7 @@ class Janela:
         
         self.screen.addstr(txt)
 
-        self.screen.attroff(curses.color_pair(2))
+        self.screen.attroff(curses.color_pair(4))
 
     def writeRequest(self):
 
@@ -68,7 +73,7 @@ class Janela:
     
     def breakWord(self,char):
         
-        if str(char).isalpha() or char =='.' or char =='-' or char=='>' or char =='_':
+        if str(char).isalpha() or char =='.' or char =='-' or char=='>' or char =='_' or char == '#':
 
             return True
 
@@ -114,7 +119,7 @@ class Janela:
 
         return text
 
-    def drawLine(self,line,Num):
+    def drawLine(self,line,Num,flag_MC):
 
         word = ""
         text=self.dftText(Num)
@@ -125,21 +130,124 @@ class Janela:
         self.screen.addstr(text)
 
         drawed =  0
+        flag = 0
         
-        for i in line+" ":
+        
+        lineCommnet = False #Detecta //
+        colon = [False,False] #detecta "
+        justW = False
+        
+        tmp = line+" "
+        for j in range(0,len(tmp)):
+            
+            i = tmp[j]
             
             Width = self.W - len(text)
             
 
-            flag1 = False
+            #FIla de Prioridades
+            
+            #1 - comentario multilinha
+            #2 - comentatrio de uma única linha
+            #3 - "" ou ''
+            #4 - detecção de palavra macro estruturas etc
+            #
+            #
+            
 
-            if self.breakWord(i):
-                if self.reserved.count(l[w]) > 0:
-                    self.screen.attron(curses.color_pair(3))
-                    flag1 = True
+            
+            #flag Handling
+            
+            if tmp[j] == '/' and tmp[j+1] == '/':
+                
+                lineCommnet = True
+            
+            if tmp[j] == '/' and tmp[j+1] == '*':
+                
+                self.flag_MC = True
+        
+            if (tmp[j] == '\"' or tmp[j] == '\'') and  (not colon[0]) and (not colon[1]):
+                
+                colon[0],colon[1] = True,False
+            
+                
+            
+            
+            
+            
+            
+            if self.flag_MC:
+                
+                flag = 1
+                pass
+            
+            elif lineCommnet:
+                
+                flag = 2
+            
+            elif colon[0] == True:
+                
+                flag = 3
+                
             else:
+                
+                if flag < 4:
+                    
+                    if self.reserved.count(l[w]) > 0:
+                        
+                        flag = 4
+                    
+                    elif self.macros.count(l[w]) > 0:
+                        
+                        flag = 5
+                    
+                    else:
+    
+                        flag = 0
+                    
+                
+            #update da palavra
+            if not self.breakWord(i):
+                
                 w = w+1
-
+                
+                if flag >= 4:
+                    
+                    flag = 0
+            #setting the flag
+            
+            #if self.breakWord(i) and flag == 0:
+            #    if self.reserved.count(l[w]) > 0:
+            #        
+            #        flag = 1
+            #    elif self.macros.count(l[w]) > 0:
+            #        
+            #        flag = 2           
+            #elif not self.breakWord(i):
+            #    w = w+1
+            #    flag = 0
+            # 
+            # if flag == 1:
+            #    self.screen.attron(curses.color_pair(3))
+            #elif flag == 2:
+            #    self.screen.attron(curses.color_pair(4))
+                
+            if flag == 1 or flag == 2:
+                
+                self.screen.attron(curses.color_pair(4))
+            
+            elif flag == 3:
+                
+                self.screen.attron(curses.color_pair(5))
+            
+            elif flag == 4:
+                
+                self.screen.attron(curses.color_pair(3))
+            
+            elif flag == 5:
+                
+                self.screen.attron(curses.color_pair(4))
+                
             if counter >= self.initC and counter < self.initC + Width-1 and drawed < Width-2:
                 if Num-1 == self.ponteiro[0] and counter ==  self.ponteiro[1]:
                     self.screen.attron(curses.color_pair(2))
@@ -157,8 +265,43 @@ class Janela:
                         drawed = drawed + 1
             counter = counter + 1
 
-            if(flag1):
+            if flag == 1 or flag == 2:
+                
+                self.screen.attroff(curses.color_pair(4))
+            
+            elif flag == 3:
+                
+                self.screen.attroff(curses.color_pair(5))
+            
+            elif flag == 4:
+                
                 self.screen.attroff(curses.color_pair(3))
+            
+            elif flag == 5:
+                
+                self.screen.attroff(curses.color_pair(4))
+            
+            
+            #desable flags
+            
+            if j > 0 and tmp[j-1] == '*' and tmp[j] == '/':
+                
+                self.flag_MC = False
+                
+            if tmp[j] == '\'' or tmp[j] == '\"':
+                
+                if colon[0]  and not colon[1]:
+                    
+                    colon[1] = True
+                
+                elif colon[0] and colon[1]:
+                    
+                    colon[0], colon[1] = False,False
+                    
+            
+                    
+                    
+                    
     
     def scrool(self):
         c = len(self.dftText(self.ponteiro[1]+1))
@@ -202,7 +345,7 @@ class Janela:
         counter = self.initL+1
         for i in self.contexto.arquivo.conteudo[self.initL:self.initL+self.H-1]:
 
-            self.drawLine(i,counter)
+            self.drawLine(i,counter,self.flag_MC)
 
             if counter <= self.initL+self.H - 1:
                 self.screen.addch('\n')
@@ -214,33 +357,62 @@ class Janela:
       
         self.contexto.ponteiro = self.ponteiro
                     
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+        
+class formating:
+    
+    def __init__(self,editor:Janela):
+        
+        self.editor = editor
+        
     def addChar(self,char):
 
-        self.contexto.arquivo.conteudo[self.ponteiro[0]] = self.contexto.arquivo.conteudo[self.ponteiro[0]][:self.ponteiro[1]]+str(char)+self.contexto.arquivo.conteudo[self.ponteiro[0]][self.ponteiro[1]:]
-        self.ponteiro[1] = self.ponteiro[1]+1
+        self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]] = self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]][:self.editor.ponteiro[1]]+str(char)+self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]][self.editor.ponteiro[1]:]
+        self.editor.ponteiro[1] = self.editor.ponteiro[1]+1
     
     def fixInitC(self):
 
         ofs = 0;
         
-        for i in self.contexto.arquivo.conteudo[self.ponteiro[0]][self.initC:self.ponteiro[1]+1]:
+        for i in self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]][self.editor.initC:self.editor.ponteiro[1]+1]:
             
             if i == '\t':
                 
-                ofs = ofs + self.tabSize
+                ofs = ofs + self.editor.tabSize
                 
             else:
             
                 ofs = ofs + 1
                 
-        W = self.W-len(self.dftText(self.ponteiro[0]))
+        W = self.editor.W-len(self.editor.dftText(self.editor.ponteiro[0]))
         
-        if self.ponteiro[1]-self.initC < 0 or ofs >= W:
+        if self.editor.ponteiro[1]-self.editor.initC < 0 or ofs >= W:
             
-            if self.ponteiro[1] > 0:
-                self.initC = self.ponteiro[1] - 1 
+            if self.editor.ponteiro[1] > 0:
+                self.editor.initC = self.editor.ponteiro[1] - 1 
             else:
-                self.initC = 0
+                self.editor.initC = 0
 
     def addLine(self):
 
@@ -248,87 +420,81 @@ class Janela:
 
         c = 0
 
-        for i in self.contexto.arquivo.conteudo[self.ponteiro[0]]:
+        for i in self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]]:
             if i == '\t':
                 c = c+1
             else:
                 break
-        subStr = ('\t'*c) + self.contexto.arquivo.conteudo[self.ponteiro[0]][self.ponteiro[1]:]
+        subStr = ('\t'*c) + self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]][self.editor.ponteiro[1]:]
 
-        self.contexto.arquivo.conteudo[self.ponteiro[0]] = self.contexto.arquivo.conteudo[self.ponteiro[0]][:self.ponteiro[1]]
+        self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]] = self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]][:self.editor.ponteiro[1]]
 
-        if(len(self.contexto.arquivo.conteudo[self.ponteiro[0]]) == 0):
-            self.contexto.arquivo.conteudo[self.ponteiro[0]] = ""
-        self.ponteiro[0] = self.ponteiro[0]+1
-        self.contexto.arquivo.conteudo.insert(self.ponteiro[0],subStr)
-        self.ponteiro[1]=c
+        if(len(self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]]) == 0):
+            self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]] = ""
+        self.editor.ponteiro[0] = self.editor.ponteiro[0]+1
+        self.editor.contexto.arquivo.conteudo.insert(self.editor.ponteiro[0],subStr)
+        self.editor.ponteiro[1]=c
 
         if c > 0:
-            self.initC = c - 1
+            self.editor.initC = c - 1
         else:
-            self.initC = 0
+            self.editor.initC = 0
         
 
     def nextLine(self):
-        if self.ponteiro[0] < len(self.contexto.arquivo.conteudo)-1:
+        if self.editor.ponteiro[0] < len(self.editor.contexto.arquivo.conteudo)-1:
 
-            self.ponteiro[0] = self.ponteiro[0]+1
+            self.editor.ponteiro[0] = self.editor.ponteiro[0]+1
 
-        if self.ponteiro[1] >= len(self.contexto.arquivo.conteudo[self.ponteiro[0]]):
+        if self.editor.ponteiro[1] >= len(self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]]):
             
-            self.ponteiro[1] = len(self.contexto.arquivo.conteudo[self.ponteiro[0]])
+            self.editor.ponteiro[1] = len(self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]])
             
         self.fixInitC()
         
     def backLine(self):
         
-        if self.ponteiro[0] > 0:
-            self.ponteiro[0] = self.ponteiro[0]-1
-            x = self.ponteiro[0]
+        if self.editor.ponteiro[0] > 0:
+            self.editor.ponteiro[0] = self.editor.ponteiro[0]-1
+            x = self.editor.ponteiro[0]
         
-        if self.ponteiro[1] >= len(self.contexto.arquivo.conteudo[self.ponteiro[0]]):    
-            self.ponteiro[1] = len(self.contexto.arquivo.conteudo[self.ponteiro[0]])
+        if self.editor.ponteiro[1] >= len(self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]]):    
+            self.editor.ponteiro[1] = len(self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]])
             
         self.fixInitC()
 
     def backChar(self):
-        if self.ponteiro[1] > 0:
+        if self.editor.ponteiro[1] > 0:
         
-            self.ponteiro[1] = self.ponteiro[1] - 1
+            self.editor.ponteiro[1] = self.editor.ponteiro[1] - 1
             
     def nextChar(self):
-        if self.ponteiro[1] < len(self.contexto.arquivo.conteudo[self.ponteiro[0]]):
-            self.ponteiro[1] = self.ponteiro[1] + 1
+        if self.editor.ponteiro[1] < len(self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]]):
+            self.editor.ponteiro[1] = self.editor.ponteiro[1] + 1
     def removeChar(self):
 
-        subStr = self.contexto.arquivo.conteudo[:self.ponteiro[0]]
+        subStr = self.editor.contexto.arquivo.conteudo[:self.editor.ponteiro[0]]
 
 
-        if len(self.contexto.arquivo.conteudo[self.ponteiro[0]])>0 and self.ponteiro[1] > 0:
-            self.ponteiro[1] = self.ponteiro[1] - 1
-            self.contexto.arquivo.conteudo[self.ponteiro[0]] = self.contexto.arquivo.conteudo[self.ponteiro[0]][:self.ponteiro[1]] + self.contexto.arquivo.conteudo[self.ponteiro[0]][self.ponteiro[1]+1:] 
+        if len(self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]])>0 and self.editor.ponteiro[1] > 0:
+            self.editor.ponteiro[1] = self.editor.ponteiro[1] - 1
+            self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]] = self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]][:self.editor.ponteiro[1]] + self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]][self.editor.ponteiro[1]+1:] 
             
         else:
             
-            if len(self.contexto.arquivo.conteudo) > 0:
+            if len(self.editor.contexto.arquivo.conteudo) > 0:
                 
-                if self.ponteiro[0] > 0:
-                    tmp = self.contexto.arquivo.conteudo[self.ponteiro[0]]
+                if self.editor.ponteiro[0] > 0:
+                    tmp = self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]]
 
-                    l = len(self.contexto.arquivo.conteudo[self.ponteiro[0]-1])
+                    l = len(self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]-1])
 
-                    self.contexto.arquivo.conteudo.pop(self.ponteiro[0])
+                    self.editor.contexto.arquivo.conteudo.pop(self.editor.ponteiro[0])
 
-                    self.contexto.arquivo.conteudo[self.ponteiro[0]-1] = self.contexto.arquivo.conteudo[self.ponteiro[0]-1] + tmp
+                    self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]-1] = self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]-1] + tmp
 
-                    self.ponteiro[0] = self.ponteiro[0]-1
+                    self.editor.ponteiro[0] = self.editor.ponteiro[0]-1
 
-                    self.ponteiro[1] = l
+                    self.editor.ponteiro[1] = l
         
-        self.screen.clear()  
-
-
-
-    
-
-    
+        self.editor.screen.clear()

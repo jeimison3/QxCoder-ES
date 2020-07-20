@@ -92,21 +92,21 @@ class KeyListener:
             #if self.interface.SELECTED == self.interface.WIN_SELECTED:
                 
             if curses.ascii.isprint(inp):
-                self.interface.janelas[self.interface.janelaAtiva].addChar(chr(inp))
+                self.interface.janelas[self.interface.janelaAtiva].format.addChar(chr(inp))
             elif chr(inp) == '\n':
-                self.interface.janelas[self.interface.janelaAtiva].addLine()
+                self.interface.janelas[self.interface.janelaAtiva].format.addLine()
             elif chr(inp) == '\t':
-                self.interface.janelas[self.interface.janelaAtiva].addChar(chr(inp))
+                self.interface.janelas[self.interface.janelaAtiva].format.addChar(chr(inp))
             elif inp == curses.KEY_DOWN:
-                self.interface.janelas[self.interface.janelaAtiva].nextLine()
+                self.interface.janelas[self.interface.janelaAtiva].format.nextLine()
             elif inp == curses.KEY_UP:
-                self.interface.janelas[self.interface.janelaAtiva].backLine()
+                self.interface.janelas[self.interface.janelaAtiva].format.backLine()
             elif inp == curses.KEY_LEFT:
-                self.interface.janelas[self.interface.janelaAtiva].backChar()
+                self.interface.janelas[self.interface.janelaAtiva].format.backChar()
             elif inp == curses.KEY_RIGHT:
-                self.interface.janelas[self.interface.janelaAtiva].nextChar()
+                self.interface.janelas[self.interface.janelaAtiva].format.nextChar()
             elif inp == curses.KEY_BACKSPACE:
-                self.interface.janelas[self.interface.janelaAtiva].removeChar()
+                self.interface.janelas[self.interface.janelaAtiva].format.removeChar()
             
             self.interface.janelas[self.interface.janelaAtiva].drawEditor()
                                        
