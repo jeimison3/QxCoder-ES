@@ -1,4 +1,5 @@
 import json
+import so
 from classes.controller.filedelivery import FileDelivery
 from classes.controller.contextdelivery import ContextDelivery
 
@@ -49,6 +50,11 @@ class AppContext:
             }
         }
         '''
+        if not(os.path.exists('config.json')):
+            with open('config.json', 'w') as arq:
+                arq.write('{}')
+
+
         with open('config.json', 'r') as arq:
             dados = json.load(arq) # Leio o arq .json
         dados_json = json.dumps(dados) # Transfromo em uma string
