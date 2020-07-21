@@ -1,7 +1,7 @@
 import json
-import os
 from classes.controller.filedelivery import FileDelivery
 from classes.controller.contextdelivery import ContextDelivery
+from classes.util.file import File
 
 class AppContext:
     '''
@@ -29,6 +29,9 @@ class AppContext:
         @param Nome do arquivo\n
         @return Objeto de configuração do .json
         '''
+        if not File.arquivoExiste("config.json"):
+            return None
+
         with open("config.json", "r") as arq:
             obj = json.load(arq)
             if filename in obj:
@@ -50,13 +53,16 @@ class AppContext:
             }
         }
         '''
-        if not(os.path.exists('config.json')):
-            with open('config.json', 'w') as arq:
-                arq.write('{}')
+        # if not(os.path.exists('config.json')):
+        #     with open('config.json', 'w') as arq:
+        #         arq.write('{}')
 
+        if File.arquivoExiste("config.json"):
+            with open('config.json', 'r') as arq:
+                dados = json.load(arq) # Leio o arq .json
+        else:
+            dados = {}
 
-        with open('config.json', 'r') as arq:
-            dados = json.load(arq) # Leio o arq .json
         dados_json = json.dumps(dados) # Transfromo em uma string
 
         if dados_json == '{}': # Testo pra ver se está vazio ou não
