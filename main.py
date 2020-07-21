@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import sys
 from classes.controller.appcontext import AppContext
 from classes.view.interface import Interface

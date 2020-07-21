@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import sys
 from classes.controller.appcontext import AppContext
 from classes.view.interface import Interface
@@ -12,8 +13,9 @@ if __name__ == '__main__':
     testes = sys.argv[1:]
 
     if len(testes) == 0:
-        print("Escolha o teste! ex.: TestAppContext, TestContexto, TestSSense")
-        exit(0)
+        testes = ["TestAppContext","TestContexto","TestSSense"]
+        #print("Escolha o teste! ex.: TestAppContext, TestContexto, TestSSense")
+        #exit(0)
 
     
     if "TestAppContext" in testes:
