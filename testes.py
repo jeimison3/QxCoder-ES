@@ -20,9 +20,9 @@ if __name__ == '__main__':
     
     if "TestAppContext" in testes:
         _test = TestAppContext()
-    elif "TestContexto" in testes:
+    if "TestContexto" in testes:
         _test = TestContexto()
-    elif "TestSSense" in testes:
+    if "TestSSense" in testes:
         _test = TestSSense()
         
 
