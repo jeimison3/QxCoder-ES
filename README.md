@@ -8,7 +8,15 @@ O QXCoder é um editor de código com interface semelhante ao antigo Vi, sendo t
 
 Para executar o editor, use `./main.py [nomeDoArquivo.c]` ou simplesmente `./main.py`
 
-# Instalação:
+## Recursos
+- Destaque de cores nas principais estruturas. 
+
+## TODO:
+- Alternar entre arquivos por janelas.
+- Sugestão de código com base nos arquivos do projeto.
+- Atalhos para copiar e colar.
+
+### Instalação:
 ```shell
 git clone https://github.com/jeimison3/QxCoder-ES.git
 cd QxCoder-ES
@@ -16,7 +24,7 @@ pip install -r requirements.txt
 ```
 
 
-## Desenvolvedores
+### Desenvolvedores
 - Testes podem ser iniciados via `./testes.py`
 
 Para inserir novas bibliotecas usar `pip freeze > requirements.txt`
