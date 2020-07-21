@@ -1,9 +1,6 @@
 language: python
 python:
   - 3.8
-before_install:
-  - bash -c "source env/bin/activate"
-env: PATH=./env/bin:$PATH
 install:
   - pip install -r requirements.txt 
 script:
