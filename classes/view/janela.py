@@ -37,6 +37,8 @@ class Janela:
         
         self.flag_MC = False
         
+       
+        
     def showPrompt(self):
 
         self.screen.attron(curses.color_pair(4))
@@ -158,11 +160,11 @@ class Janela:
             
             #flag Handling
             
-            if tmp[j] == '/' and tmp[j+1] == '/':
+            if tmp[j] == '/' and tmp[j+1] == '/' and not colon[0] and not colon[1] :
                 
                 lineCommnet = True
             
-            if tmp[j] == '/' and tmp[j+1] == '*':
+            if tmp[j] == '/' and tmp[j+1] == '*' and not colon[0] and not colon[1]:
                 
                 self.flag_MC = True
         
@@ -330,7 +332,18 @@ class Janela:
 
             self.screen.clear()
  
-
+    def fix_Flag_MC(self):
+        
+        for i in self.contexto.arquivo.conteudo[0:self.initL]:
+            
+            for j in range(1,len(i)):
+                
+                if i[j] == '*' and i[j-1] == '/':
+                    
+                    self.flag_MC = True
+                elif i[j] == '/' and i[j-1] == '*':
+                    self.flag_MC = False
+                    
     def drawEditor(self):
         self.screen.move(0,0)
 
@@ -341,7 +354,7 @@ class Janela:
 
         #Scrool
         self.scrool()           
-
+        self.fix_Flag_MC()
         counter = self.initL+1
         for i in self.contexto.arquivo.conteudo[self.initL:self.initL+self.H-1]:
 
