@@ -137,6 +137,7 @@ class Janela:
         
         lineCommnet = False #Detecta //
         colon = [False,False] #detecta "
+        scolon = [False,False] #detecta '
         justW = False
         
         tmp = line+" "
@@ -168,9 +169,13 @@ class Janela:
                 
                 self.flag_MC = True
         
-            if (tmp[j] == '\"' or tmp[j] == '\'') and  (not colon[0]) and (not colon[1]):
+            if (tmp[j] == '\"') and  (not colon[0]) and (not colon[1]):
                 
                 colon[0],colon[1] = True,False
+            
+            if tmp[j] == '\''  and  (not scolon[0]) and (not scolon[1]):
+                
+                scolon[0],scolon[1] = True,False
             
                 
             
@@ -187,10 +192,9 @@ class Janela:
                 
                 flag = 2
             
-            elif colon[0] == True:
+            elif colon[0] or scolon[0]:
                 
                 flag = 3
-                
             else:
                 
                 if flag < 4:
@@ -290,7 +294,7 @@ class Janela:
                 
                 self.flag_MC = False
                 
-            if tmp[j] == '\'' or tmp[j] == '\"':
+            if tmp[j] == '\"':
                 
                 if colon[0]  and not colon[1]:
                     
@@ -299,6 +303,16 @@ class Janela:
                 elif colon[0] and colon[1]:
                     
                     colon[0], colon[1] = False,False
+            
+            if tmp[j] == '\'':
+                
+                if scolon[0]  and not scolon[1]:
+                    
+                    scolon[1] = True
+                
+                elif scolon[0] and scolon[1]:
+                    
+                    scolon[0], scolon[1] = False,False
                     
             
                     

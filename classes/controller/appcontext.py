@@ -1,5 +1,5 @@
 import json
-import so
+import os
 from classes.controller.filedelivery import FileDelivery
 from classes.controller.contextdelivery import ContextDelivery
 
