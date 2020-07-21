@@ -8,7 +8,7 @@ class TestSSense:
         self.testOpen()
         self.printPadronizados()
         self.estruturas()
-        self.ssense()
+        #self.ssense() # Incompleto
 
     def testOpen(self):
         print("> Teste open()")
