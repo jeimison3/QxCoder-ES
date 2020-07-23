@@ -5,7 +5,7 @@ from classes.view.interface import Interface
 
 class TInterface:
     
-    def __init__(self):
+    def begin():
         
         self.app = AppContext()
         self.interface = Interface(self.app,breakFlag = True)
@@ -24,20 +24,38 @@ class TInterface:
         #self.setPonteiro(1,1)
         #self.testSave()
 
-    def testOpen(self):
+    def testOpen():
+        app = AppContext()
+        interface = Interface(self.app,breakFlag = True)
 
-        self.interface.open(self.arquivo1)
-        self.interface.open(self.arquivo2)
+        
 
-        self.interface.janelas[0].contexto.arquivo.conteudo = conteudo
-        self.interface.janelas[1].contexto.arquivo.conteudo = conteudo
+        arquivo1 = ["tmpFiles/teste1.c"]
+        arquivo2 = ["tmpFiles/teste2.c"]
+        
+        interface.open(self.arquivo1)
+        interface.open(self.arquivo2)
 
-    def testSetConteudo(self):
+        interface.janelas[0].contexto.arquivo.conteudo = conteudo
+        interface.janelas[1].contexto.arquivo.conteudo = conteudo
 
-        self.interface.janelas[0].contexto.arquivo.conteudo = conteudo
-        self.interface.janelas[1].contexto.arquivo.conteudo = conteudo
+
     
     def testWrite(self):
+
+        app = AppContext()
+        interface = Interface(self.app,breakFlag = True)
+
+        
+
+        arquivo1 = ["tmpFiles/teste1.c"]
+        arquivo2 = ["tmpFiles/teste2.c"]
+        
+        interface.open(self.arquivo1)
+        interface.open(self.arquivo2)
+
+        interface.janelas[0].contexto.arquivo.conteudo = conteudo
+        interface.janelas[1].contexto.arquivo.conteudo = conteudo
 
         for j in self.interface.janelas:
 
@@ -45,14 +63,14 @@ class TInterface:
 
     def testRead():
 
-        del self.app
-        del self.interface
+        app = AppContext()
+        interface = Interface(app,breakFlag = True)        
 
-        self.app = AppContext()
-        self.interface = Interface(self.app,breakFlag = True)
-
-        self.interface.open(self.arquivo1)
-        self.interface.open(self.arquivo2)
+        arquivo1 = ["tmpFiles/teste1.c"]
+        arquivo2 = ["tmpFiles/teste2.c"]
+        
+        interface.open(arquivo1)
+        interface.open(arquivo2)
 
         assert self.interface.janelas[0].contexto.arquivo.conteudo == conteudo
         assert self.interface.janelas[1].contexto.arquivo.conteudo == conteudo
