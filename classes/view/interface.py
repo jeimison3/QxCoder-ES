@@ -10,7 +10,7 @@ class Interface:
     '''
     Classe da interface principal do app, que suportará janelas.
     '''
-    def __init__(self, listContextos, appContext : AppContext):
+    def __init__(self, listContextos, appContext : AppContext,breakFlag = False):
         self.app = appContext
         #self.keylistener = KeyListener(self)
         self.janelas = []
@@ -22,16 +22,10 @@ class Interface:
         #WIns
         self.mainScreen = curses.initscr() #Janela principal
         self.tab = curses.newwin(0,0,0,0)
-        self.footer = curses.newwin(0,0,0,0)
         self.editor = curses.newpad(1,1)
 
         curses.curs_set(0)
-        #SELEÇÂO
-        self.TAB_SELECTED = 0
-        self.OP_SELECTED = 1
-        self.WIN_SELECTED = 2
-        
-        self.SELECTED = 1
+
 
         #OPÇÕES
         self.OPTION = 0
@@ -55,10 +49,6 @@ class Interface:
         curses.curs_set(0)
         #Thread Keyboard
        
-        self.lastPC = None
-        self.lastNPC = None
-        self.lastWold = None
-
         #self.lines = [" "]
 
         self.mainScreen.keypad(True)
@@ -72,12 +62,13 @@ class Interface:
         self.tab.keypad(True)
         curses.raw()
         
+        self.breakFlag = False
         
-        while self.keylistener.keyListenerThread():
-            self.janelas[self.janelaAtiva].drawEditor()
+        if not breakFlag:
+            while self.keylistener.keyListenerThread() and not self.breakFlag:
+                self.janelas[self.janelaAtiva].drawEditor()
             
         self.mainScreen.clear()
-        self.footer.clear()
         self.tab.clear()
         
         curses.endwin()
@@ -105,6 +96,7 @@ class Interface:
         self.janelas.append(Janela(cntx,self.editor))
         # Depois atualiza desenho da interface?
     
+
     def drawMainWin(self):
 
 
@@ -135,16 +127,24 @@ class Interface:
         #Curso on
         #curses.curs_set(1)
 
-    def open(self):
+    def open(self,path = ""):
 
-        self.tab.clear()
+        arq = [""]
 
-        self.tab.move(0,0)
+        if path == "":
 
-        arq = str(self.tab.getstr())
-        
-        
-        arq = arq[2:len(arq)-1]      
+            self.tab.clear()
+
+            self.tab.move(0,0)
+
+            arq = str(self.tab.getstr())
+            
+            arq = arq[2:len(arq)-1]  
+
+        else:
+
+            arq = path   
+
         try:
 
             pathname, filename = File.splitFilePath(arq) 
