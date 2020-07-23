@@ -69,10 +69,10 @@ class Interface:
             while self.keylistener.keyListenerThread() and not self.breakFlag:
                 self.janelas[self.janelaAtiva].drawEditor()
             
-        self.mainScreen.clear()
-        self.tab.clear()
+            self.mainScreen.clear()
+            self.tab.clear()
         
-        curses.endwin()
+            curses.endwin()
         
 
         
