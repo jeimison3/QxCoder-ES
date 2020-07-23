@@ -31,8 +31,8 @@ class TInterface:
 
         
 
-        arquivo1 = "tmpFiles/teste2.c"
-        arquivo2 = "tmpFiles/teste3.c"
+        arquivo1 = "tmpFiles/teste1.c"
+        arquivo2 = "tmpFiles/teste2.c"
         
         interface.open(arquivo1)
         interface.open(arquivo2)
