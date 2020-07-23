@@ -5,24 +5,6 @@ from classes.view.interface import Interface
 
 class TInterface:
     
-    def begin():
-        
-        self.app = AppContext()
-        self.interface = Interface(self.app,breakFlag = True)
-
-        self.conteudo = ["#define Teste_Interface True","","int main(){","\t return 0;","}"]
-
-        self.arquivo1 = ["tmpFiles/teste1.c"]
-        self.arquivo2 = ["tmpFiles/teste2.c"]
-
-
-        self.testOpen()
-        self.testWrite()
-        self.testRead()
-
-        #self.conteudo()
-        #self.setPonteiro(1,1)
-        #self.testSave()
 
     def testOpen():
         app = AppContext()
