@@ -39,7 +39,7 @@ class TInterface:
         interface.janelas[0].contexto.arquivo.conteudo = conteudo
         interface.janelas[1].contexto.arquivo.conteudo = conteudo
 
-        for j in self.interface.janelas:
+        for j in interface.janelas:
 
             j.writeRequest()
 
