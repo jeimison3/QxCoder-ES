@@ -75,8 +75,8 @@ class TInterface:
         interface.open(arquivo2)
 
 
-        assert interface.janelas[0].contexto.arquivo.conteudo == "Teste"
-        assert interface.janelas[1].contexto.arquivo.conteudo == "Teste"
+        assert interface.janelas[0].contexto.arquivo.conteudo == ["Teste"]
+        assert interface.janelas[1].contexto.arquivo.conteudo == ["Teste"]
 
 
 
