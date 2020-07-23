@@ -66,7 +66,7 @@ class Interface:
         if not breakFlag:
             curses.raw()
             self.drawMainWin()
-            while self.keylistener.keyListenerThread() and not self.breakFlag:
+            while self.keylistener.keyListenerThread():
                 self.janelas[self.janelaAtiva].drawEditor()
             
             self.mainScreen.clear()
