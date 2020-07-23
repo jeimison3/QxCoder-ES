@@ -58,6 +58,10 @@ class TInterface:
         interface.janelas[0].contexto.arquivo.conteudo = "Teste"
         interface.janelas[1].contexto.arquivo.conteudo = "Teste"
 
+        interface.janelas[0].writeRequest()
+        interface.janelas[1].writeRequest()
+
+
         del app
         del interface
 
