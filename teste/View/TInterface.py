@@ -6,7 +6,7 @@ from classes.view.interface import Interface
 class TInterface:
     
 
-    def testOpen():
+    def testOpen(self):
         app = AppContext()
         interface = Interface(app,breakFlag = True)
 
@@ -23,7 +23,7 @@ class TInterface:
 
 
     
-    def testWrite():
+    def testWrite(self):
 
         app = AppContext()
         interface = Interface(app,breakFlag = True)
@@ -43,7 +43,7 @@ class TInterface:
 
             j.writeRequest()
 
-    def testRead():
+    def testRead(self):
 
         app = AppContext()
         interface = Interface(app,breakFlag = True)        
