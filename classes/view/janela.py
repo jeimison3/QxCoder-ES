@@ -35,7 +35,6 @@ class Janela:
 
         self.screenCounter = 0
 
-        self.SS = SSense(self.contexto)
         
         self.format = formating(self)
         
@@ -49,9 +48,13 @@ class Janela:
         
         self.screen.move(self.H - 1,0)
         
-        txt = "HINT:" + self.SS.getSugestao(trecho=self.contexto.arquivo.conteudo[self.ponteiro[0]])[0]["complemento"]
+        txt = "HINT:" 
+
+        for i in self.contexto.ssense.getSugestao():
+
+            txt = txt + str(i)
         
-        self.screen.addstr(txt)
+        self.screen.addstr(txt,self.W-1)
 
         self.screen.attroff(curses.color_pair(4))
 
