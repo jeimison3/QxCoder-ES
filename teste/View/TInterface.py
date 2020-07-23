@@ -18,8 +18,8 @@ class TInterface:
         interface.open(arquivo1)
         interface.open(arquivo2)
 
-        interface.janelas[0].contexto.arquivo.conteudo = conteudo
-        interface.janelas[1].contexto.arquivo.conteudo = conteudo
+        interface.janelas[0].contexto.arquivo.conteudo = "Teste"
+        interface.janelas[1].contexto.arquivo.conteudo = "Teste"
 
 
     
@@ -37,8 +37,8 @@ class TInterface:
         interface.open(arquivo1)
         interface.open(arquivo2)
 
-        interface.janelas[0].contexto.arquivo.conteudo = conteudo
-        interface.janelas[1].contexto.arquivo.conteudo = conteudo
+        interface.janelas[0].contexto.arquivo.conteudo = "Teste"
+        interface.janelas[1].contexto.arquivo.conteudo = "Teste"
 
         for j in interface.janelas:
 
@@ -55,8 +55,8 @@ class TInterface:
         interface.open(arquivo1)
         interface.open(arquivo2)
 
-        assert interface.janelas[0].contexto.arquivo.conteudo == conteudo
-        assert interface.janelas[1].contexto.arquivo.conteudo == conteudo
+        assert interface.janelas[0].contexto.arquivo.conteudo == "Teste"
+        assert interface.janelas[1].contexto.arquivo.conteudo == "Teste"
 
 
 
