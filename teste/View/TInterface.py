@@ -55,6 +55,22 @@ class TInterface:
         interface.open(arquivo1)
         interface.open(arquivo2)
 
+        interface.janelas[0].contexto.arquivo.conteudo = "Teste"
+        interface.janelas[1].contexto.arquivo.conteudo = "Teste"
+
+        del app
+        del interface
+
+        app = AppContext()
+        interface = Interface(app.contextdelivery.contextos, app,breakFlag = True)        
+
+        arquivo1 = "teste1.c"
+        arquivo2 = "teste2.c"
+
+        interface.open(arquivo1)
+        interface.open(arquivo2)
+
+
         assert interface.janelas[0].contexto.arquivo.conteudo == "Teste"
         assert interface.janelas[1].contexto.arquivo.conteudo == "Teste"
 
