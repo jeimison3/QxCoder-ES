@@ -15,26 +15,26 @@ class TInterface:
         arquivo1 = ["tmpFiles/teste1.c"]
         arquivo2 = ["tmpFiles/teste2.c"]
         
-        interface.open(self.arquivo1)
-        interface.open(self.arquivo2)
+        interface.open(arquivo1)
+        interface.open(arquivo2)
 
         interface.janelas[0].contexto.arquivo.conteudo = conteudo
         interface.janelas[1].contexto.arquivo.conteudo = conteudo
 
 
     
-    def testWrite(self):
+    def testWrite():
 
         app = AppContext()
-        interface = Interface(self.app,breakFlag = True)
+        interface = Interface(app,breakFlag = True)
 
         
 
         arquivo1 = ["tmpFiles/teste1.c"]
         arquivo2 = ["tmpFiles/teste2.c"]
         
-        interface.open(self.arquivo1)
-        interface.open(self.arquivo2)
+        interface.open(arquivo1)
+        interface.open(arquivo2)
 
         interface.janelas[0].contexto.arquivo.conteudo = conteudo
         interface.janelas[1].contexto.arquivo.conteudo = conteudo
@@ -54,8 +54,8 @@ class TInterface:
         interface.open(arquivo1)
         interface.open(arquivo2)
 
-        assert self.interface.janelas[0].contexto.arquivo.conteudo == conteudo
-        assert self.interface.janelas[1].contexto.arquivo.conteudo == conteudo
+        assert interface.janelas[0].contexto.arquivo.conteudo == conteudo
+        assert interface.janelas[1].contexto.arquivo.conteudo == conteudo
 
 
 
