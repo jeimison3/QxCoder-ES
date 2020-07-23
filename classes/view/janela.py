@@ -22,6 +22,10 @@ class Janela:
         self.initC = self.ponteiro[1]
         self.screen = screen
 
+        if self.contexto.arquivo.conteudo == []:
+
+            self.contexto.arquivo.conteudo = [""]
+
         
         self.reserved = ["int","float","double","struct","union","char","void","if","else","return","for","while"]
         
@@ -36,8 +40,6 @@ class Janela:
         self.format = formating(self)
         
         self.flag_MC = False
-        
-       
         
     def showPrompt(self):
 
@@ -154,10 +156,6 @@ class Janela:
             #2 - comentatrio de uma única linha
             #3 - "" ou ''
             #4 - detecção de palavra macro estruturas etc
-            #
-            #
-            
-
             
             #flag Handling
             
@@ -169,19 +167,13 @@ class Janela:
                 
                 self.flag_MC = True
         
-            if (tmp[j] == '\"') and  (not colon[0]) and (not colon[1]):
+            if (tmp[j] == '\"') and  (not colon[0]) and (not colon[1]) and ((tmp[j-1] != '\\') if j > 0 else 1 ):
                 
                 colon[0],colon[1] = True,False
             
-            if tmp[j] == '\''  and  (not scolon[0]) and (not scolon[1]):
+            if tmp[j] == '\''  and  (not scolon[0]) and (not scolon[1]) and ((tmp[j-1] != '\\') if j > 0 else 1 ):
                 
                 scolon[0],scolon[1] = True,False
-            
-                
-            
-            
-            
-            
             
             if self.flag_MC:
                 
@@ -220,23 +212,6 @@ class Janela:
                 if flag >= 4:
                     
                     flag = 0
-            #setting the flag
-            
-            #if self.breakWord(i) and flag == 0:
-            #    if self.reserved.count(l[w]) > 0:
-            #        
-            #        flag = 1
-            #    elif self.macros.count(l[w]) > 0:
-            #        
-            #        flag = 2           
-            #elif not self.breakWord(i):
-            #    w = w+1
-            #    flag = 0
-            # 
-            # if flag == 1:
-            #    self.screen.attron(curses.color_pair(3))
-            #elif flag == 2:
-            #    self.screen.attron(curses.color_pair(4))
                 
             if flag == 1 or flag == 2:
                 
@@ -294,31 +269,26 @@ class Janela:
                 
                 self.flag_MC = False
                 
-            if tmp[j] == '\"':
+            if tmp[j] == '\"' and ((tmp[j-1] != '\\') if j > 0 else 1 ):
                 
                 if colon[0]  and not colon[1]:
                     
                     colon[1] = True
                 
-                elif colon[0] and colon[1]:
+                elif colon[0] and colon[1] :
                     
                     colon[0], colon[1] = False,False
             
-            if tmp[j] == '\'':
+            if tmp[j] == '\'' and ((tmp[j-1] != '\\') if j > 0 else 1 ):
                 
                 if scolon[0]  and not scolon[1]:
                     
                     scolon[1] = True
                 
-                elif scolon[0] and scolon[1]:
+                elif scolon[0] and scolon[1] :
                     
                     scolon[0], scolon[1] = False,False
                     
-            
-                    
-                    
-                    
-    
     def scrool(self):
         c = len(self.dftText(self.ponteiro[1]+1))
         #Scrool

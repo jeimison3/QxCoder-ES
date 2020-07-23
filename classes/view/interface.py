@@ -2,6 +2,7 @@ from classes.view.keylistener import KeyListener,Keys
 from classes.view.janela import Janela
 from classes.controller.contexto import Contexto
 from classes.controller.appcontext import AppContext
+from classes.util.file import File
 
 import curses
 import threading
@@ -62,13 +63,19 @@ class Interface:
 
         self.mainScreen.keypad(True)
         self.keylistener = KeyListener(self)
-        kList = threading.Thread(target=self.keylistener.keyListenerThread,name="klthread")
+        #kList = threading.Thread(target=self.keylistener.keyListenerThread,name="klthread")
 
         self.drawMainWin()
-        kList.start()
-        #self.keylistener.keyListenerThread()
+        #kList.start()
         
-        kList.join()
+        
+        self.tab.keypad(True)
+        curses.raw()
+        
+        
+        while self.keylistener.keyListenerThread():
+            self.janelas[self.janelaAtiva].drawEditor()
+            
         self.mainScreen.clear()
         self.footer.clear()
         self.tab.clear()
@@ -116,47 +123,6 @@ class Interface:
         self.tab.mvwin(Height-1,0)
         
         
-        #-------------------------------FOOTER
-        #self.footer.resize(1,Width)        
-        
-        #self.footer.mvwin(Height-1,0)
-        
-
-        #footerSize = 0
-
-        #for i in self.ops:
-
-        #    footerSize = footerSize + len(i)
-
-        #if self.SELECTED != self.OP_SELECTED:
-
-        #    for i in self.ops:
-
-        #        self.footer.addstr(i)
-        #else:
-        #    counter = 0
-        #    for i in self.ops:
-
-        #        if counter == self.OPTION:
-        #            self.footer.attron(curses.color_pair(2))
-        #            self.footer.addstr(i)
-        #            self.footer.attroff(curses.color_pair(2))
-        #        else:
-        #            self.footer.addstr(i)
-        #        counter = counter + 1
-        #TAB
-        #self.tab.move(0,0)
-        #if self.SELECTED == self.TAB_SELECTED:
-            #self.tab.attron(curses.color_pair(2))
-        #    self.tab.addstr("*"+self.janelas[self.janelaAtiva].contexto.arquivo.local,Width-1)
-            #self.tab.attroff(curses.color_pair(2))
-        #else:
-        #    self.tab.addstr(self.janelas[self.janelaAtiva].contexto.arquivo.local,Width-1)
-
-
-
-       
-        
         self.tab.addstr(self.janelas[self.janelaAtiva].contexto.arquivo.local,Width-1)
         self.mainScreen.refresh()
         #self.footer.refresh()
@@ -164,76 +130,41 @@ class Interface:
         #self.editor.refresh(0, 0, 0, 0, Height, Width)
         #Editor
         self.editor.resize(Height-1,Width)
+        self.janelas[self.janelaAtiva].screen.clear()
         self.janelas[self.janelaAtiva].drawEditor()
         #Curso on
         #curses.curs_set(1)
+
+    def open(self):
+
+        self.tab.clear()
+
+        self.tab.move(0,0)
+
+        arq = str(self.tab.getstr())
+        
+        
+        arq = arq[2:len(arq)-1]      
+        try:
+
+            pathname, filename = File.splitFilePath(arq) 
+            self.app.open(pathname,filename,True)
+
+        except Exception as e:
+            
+            print('Erro no processamento do contexto.')
+            
+            raise e
+
+        self.criarJanela(self.app.contextdelivery.contextos[-1])
+
+        self.janelaAtiva = len(self.janelas) - 1     
+
+        self.tab.clear()   
+
     
-#    def drawHF(self):
-#        
-#        self.footer.move(0,0)
-#        self.footer.clear()
-#        self.tab.clear()
-#
-#       
-#
-#        #Iniciando - Verificando erros de tamanho        
-#        Height,Width = self.mainScreen.getmaxyx()
-#        
+             
 
-        
-#        #header
-#        self.tab.resize(1,Width)
-    
-#        self.tab.mvwin(Height-2,0)
-        
-        
-#        #-------------------------------FOOTER
-#        #self.footer.resize(1,Width)        
-#        
-#        #self.footer.mvwin(Height-1,0)
-#        
-#
-#        #footerSize = 0
-#
-#        #for i in self.ops:
-#        #
-#        #    footerSize = footerSize + len(i)
 
-#        #if self.SELECTED != self.OP_SELECTED:
 
-#        #    for i in self.ops:
 
-#        #        self.footer.addstr(i)
-#        #else:
-#        #    counter = 0
-#        #   for i in self.ops:
-#        #
-#        #       if counter == self.OPTION:
-#        #           self.footer.attron(curses.color_pair(2))
-#        #            self.footer.addstr(i)
-#        #            self.footer.attroff(curses.color_pair(2))
-#        #        else:
-#        #            self.footer.addstr(i)
-#        #        counter = counter + 1
-#        #TAB
-#        #self.tab.move(0,0)
-#        #if self.SELECTED == self.TAB_SELECTED:
-#            #self.tab.attron(curses.color_pair(2))
-#        #     self.tab.addstr("*"+self.janelas[self.janelaAtiva].contexto.arquivo.local,Width-1)
-#            #self.tab.attroff(curses.color_pair(2))
-#        #else:
-#        #    self.tab.addstr(self.janelas[self.janelaAtiva].contexto.arquivo.local,Width-1)
-#        self.tab.addstr(self.janelas[self.janelaAtiva].contexto.arquivo.local,Width-1)
-#
-#
-#       
-#        
-#        
-#        self.mainScreen.refresh()
-#        #self.footer.refresh()
-#        self.tab.refresh()
-#        #self.editor.refresh(0, 0, 0, 0, Height, Width)
-#        #Editor
-#        #self.editor.resize(Height-2,Width)
-#        #self.janelas[self.janelaAtiva].drawEditor()
-#        

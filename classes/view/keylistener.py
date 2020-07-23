@@ -22,93 +22,78 @@ class KeyListener:
 
     def keyListenerThread(self):
         
-        self.interface.tab.keypad(True)
-    
-        curses.raw()
         
-        keySC = []
+  
 
-        while 1:   
-
-            self.interface.drawMainWin() 
+        self.interface.drawMainWin() 
                         
-            inp = self.interface.mainScreen.getch()
+        inp = self.interface.mainScreen.getch()
 
-            #Verificando atalho
+        #Verificando atalho
             
-            if inp == curses.ascii.DC3:
+        if inp == curses.ascii.DC3:
                 
-                self.interface.janelas[self.interface.janelaAtiva].writeRequest()
-            
-            elif inp == curses.ascii.ESC:
-                
-                break
-            
-            elif inp == curses.ascii.CAN:
-                
-                self.interface.janelas[self.interface.janelaAtiva].writeRequest()
-                break
-                
-            elif inp == curses.KEY_RESIZE:
-                
-                self.interface.janelas[self.interface.janelaAtiva].screen.clear()
-                
-                continue
-            
-            
-            #JANELAS 
-            #if inp==curses.ascii.ESC:
+            self.interface.janelas[self.interface.janelaAtiva].writeRequest()
 
-            #    self.interface.SELECTED = (self.interface.SELECTED+1)%3
-                
-            #    continue
-                
-                #self.interface.drawHF()
-            #OP
-            #if self.interface.SELECTED == self.interface.OP_SELECTED:
-                
-                #DIRECTIONAL KEY HANDLING
-            #    if inp == curses.KEY_RIGHT:
-            #        self.interface.OPTION = (self.interface.OPTION+1)%len(self.interface.ops)
-            #    elif inp == curses.KEY_LEFT:
-            #        self.interface.OPTION = (self.interface.OPTION-1)%len(self.interface.ops)
-            #    elif chr(inp) == '\n':
-            #        if self.interface.OPTION == 1:
-            #            break
-            #        elif self.interface.OPTION == 0:
-            #            self.interface.janelas[self.interface.janelaAtiva].writeRequest()
-                
-                #self.interface.drawHF()
-            #Tab
-            #if self.interface.SELECTED == self.interface.TAB_SELECTED:
-
-            #    if inp == curses.KEY_RIGHT:
-            #        self.interface.janelaAtiva = (self.interface.janelaAtiva+1)%len(self.interface.janelas) 
-            #    elif inp == curses.KEY_LEFT:
-            #        self.interface.janelaAtiva = (self.interface.janelaAtiva-1)%len(self.interface.janelas) 
-                
-                #self.interface.drawHF()
-            #WIN
-            #if self.interface.SELECTED == self.interface.WIN_SELECTED:
-                
-            if curses.ascii.isprint(inp):
-                self.interface.janelas[self.interface.janelaAtiva].format.addChar(chr(inp))
-            elif chr(inp) == '\n':
-                self.interface.janelas[self.interface.janelaAtiva].format.addLine()
-            elif chr(inp) == '\t':
-                self.interface.janelas[self.interface.janelaAtiva].format.addChar(chr(inp))
-            elif inp == curses.KEY_DOWN:
-                self.interface.janelas[self.interface.janelaAtiva].format.nextLine()
-            elif inp == curses.KEY_UP:
-                self.interface.janelas[self.interface.janelaAtiva].format.backLine()
-            elif inp == curses.KEY_LEFT:
-                self.interface.janelas[self.interface.janelaAtiva].format.backChar()
-            elif inp == curses.KEY_RIGHT:
-                self.interface.janelas[self.interface.janelaAtiva].format.nextChar()
-            elif inp == curses.KEY_BACKSPACE:
-                self.interface.janelas[self.interface.janelaAtiva].format.removeChar()
+            return 1
             
-            self.interface.janelas[self.interface.janelaAtiva].drawEditor()
+        elif inp == curses.ascii.ESC:
+                
+            return 0
+            
+        elif inp == curses.ascii.CAN:
+            
+            for janela in self.interface.janelas:
+
+                janela.writeRequest()
+            
+            return 0
+                
+        elif inp == curses.KEY_RESIZE:
+            
+            self.interface.janelas[self.interface.janelaAtiva].screen.clear()
+                
+            return 1
+
+        elif inp == curses.ascii.SO:
+
+            self.interface.janelaAtiva = (self.interface.janelaAtiva + 1) % len(self.interface.janelas)
+            self.interface.drawMainWin()
+
+            return 1
+
+        elif inp == curses.ascii.STX:
+
+            self.interface.janelaAtiva = (self.interface.janelaAtiva - 1) % len(self.interface.janelas)
+            self.interface.drawMainWin()
+
+            return 1
+
+        elif inp == curses.ascii.SI:
+
+            self.interface.open()
+
+            return 1
+                
+        if curses.ascii.isprint(inp):
+            self.interface.janelas[self.interface.janelaAtiva].format.addChar(chr(inp))
+        elif chr(inp) == '\n':
+            self.interface.janelas[self.interface.janelaAtiva].format.addLine()
+        elif chr(inp) == '\t':
+            self.interface.janelas[self.interface.janelaAtiva].format.addChar(chr(inp))
+        elif inp == curses.KEY_DOWN:
+            self.interface.janelas[self.interface.janelaAtiva].format.nextLine()
+        elif inp == curses.KEY_UP:
+            self.interface.janelas[self.interface.janelaAtiva].format.backLine()
+        elif inp == curses.KEY_LEFT:
+            self.interface.janelas[self.interface.janelaAtiva].format.backChar()
+        elif inp == curses.KEY_RIGHT:
+            self.interface.janelas[self.interface.janelaAtiva].format.nextChar()
+        elif inp == curses.KEY_BACKSPACE:
+            self.interface.janelas[self.interface.janelaAtiva].format.removeChar()
+        
+        return 1
+        
                                        
     def triggeredAtalho(self, atalho : Keys):
         '''
