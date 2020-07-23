@@ -60,12 +60,11 @@ class Interface:
         
         
         self.tab.keypad(True)
-        curses.raw()
+
         
-        self.breakFlag = False
         
         if not breakFlag:
-
+            curses.raw()
             self.drawMainWin()
             while self.keylistener.keyListenerThread() and not self.breakFlag:
                 self.janelas[self.janelaAtiva].drawEditor()
