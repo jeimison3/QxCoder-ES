@@ -55,7 +55,7 @@ class Interface:
         self.keylistener = KeyListener(self)
         #kList = threading.Thread(target=self.keylistener.keyListenerThread,name="klthread")
 
-        self.drawMainWin()
+        
         #kList.start()
         
         
@@ -65,6 +65,8 @@ class Interface:
         self.breakFlag = False
         
         if not breakFlag:
+
+            self.drawMainWin()
             while self.keylistener.keyListenerThread() and not self.breakFlag:
                 self.janelas[self.janelaAtiva].drawEditor()
             
