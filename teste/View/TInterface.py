@@ -8,7 +8,7 @@ class TInterface:
 
     def testOpen(self):
         app = AppContext()
-        interface = Interface(appContext=app,breakFlag = True)
+        interface = Interface(app.contextdelivery.contextos, app,breakFlag = True)
 
         
 
@@ -26,7 +26,7 @@ class TInterface:
     def testWrite(self):
 
         app = AppContext()
-        interface = Interface(appContext=app,breakFlag = True)
+        interface = Interface(app.contextdelivery.contextos, app,breakFlag = True)
 
         
 
@@ -46,7 +46,7 @@ class TInterface:
     def testRead(self):
 
         app = AppContext()
-        interface = Interface(appContext=app,breakFlag = True)        
+        interface = Interface(app.contextdelivery.contextos, app,breakFlag = True)        
 
         arquivo1 = ["tmpFiles/teste1.c"]
         arquivo2 = ["tmpFiles/teste2.c"]
