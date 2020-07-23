@@ -12,8 +12,8 @@ class TInterface:
 
         
 
-        arquivo1 = "tmpFiles/teste1.c"
-        arquivo2 = "tmpFiles/teste2.c"
+        arquivo1 = "teste1.c"
+        arquivo2 = "teste2.c"
         
         interface.open(arquivo1)
         interface.open(arquivo2)
@@ -31,8 +31,8 @@ class TInterface:
 
         
 
-        arquivo1 = "tmpFiles/teste1.c"
-        arquivo2 = "tmpFiles/teste2.c"
+        arquivo1 = "teste1.c"
+        arquivo2 = "teste2.c"
         
         interface.open(arquivo1)
         interface.open(arquivo2)
@@ -49,8 +49,8 @@ class TInterface:
         app = AppContext()
         interface = Interface(app.contextdelivery.contextos, app,breakFlag = True)        
 
-        arquivo1 = "tmpFiles/teste1.c"
-        arquivo2 = "tmpFiles/teste2.c"
+        arquivo1 = "teste1.c"
+        arquivo2 = "teste2.c"
         
         interface.open(arquivo1)
         interface.open(arquivo2)
