@@ -8,7 +8,7 @@ class TInterface:
 
     def testOpen():
         app = AppContext()
-        interface = Interface(self.app,breakFlag = True)
+        interface = Interface(app,breakFlag = True)
 
         
 
@@ -66,21 +66,21 @@ class TInterface:
     #    arquivos = ["exemplo/teste.c"]
     #    for arq in arquivos:
     #        pathname, filename = File.splitFilePath(arq) 
-    #        self.contexto = self.app.open(pathname,filename,True)
-    #    print("> Erros open(): ", self.app.arquivosErros )
+    #        contexto = app.open(pathname,filename,True)
+    #    print("> Erros open(): ", app.arquivosErros )
 
     #def setPonteiro(self,l,c):
     #    print("> Teste setPonteiro(%s,%s)" % (l,c))
-    #    self.contexto.ponteiro = [l,c]
+    #    contexto.ponteiro = [l,c]
 
     #def getPonteiro(self):
     #   print("> Teste getPonteiro()")
-    #    print("Ponteiro (L:%s, C:%s)" % (self.contexto.ponteiro[0],self.contexto.ponteiro[1]))
+    #    print("Ponteiro (L:%s, C:%s)" % (contexto.ponteiro[0],contexto.ponteiro[1]))
 
     #def conteudo(self):
     #    print("> Teste arquivo.conteudo")
-    #    print("> ", self.contexto.arquivo.conteudo)
+    #    print("> ", contexto.arquivo.conteudo)
 
     #def testSave(self):
     #    print("> Teste save()")
-    #    self.contexto.save()
+    #    contexto.save()
