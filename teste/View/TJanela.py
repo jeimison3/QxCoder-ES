@@ -77,13 +77,13 @@ class TJanela:
         interface.janelas[0].format.addChar('t')
         interface.janelas[0].format.addChar('e')
 
-        assert interface.janelas[0].ponteiro[1] = 5
+        assert interface.janelas[0].ponteiro[1] == 5
 
         interface.janelas[0].format.removeChar()
         interface.janelas[0].format.removeChar()
         interface.janelas[0].format.removeChar()
 
-        assert interface.janelas[0].ponteiro[1] = 2
+        assert interface.janelas[0].ponteiro[1] == 2
 
         interface.janelas[0].format.addLine()
         interface.janelas[0].format.addLine()
@@ -91,7 +91,7 @@ class TJanela:
         interface.janelas[0].format.addLine()
         interface.janelas[0].format.addLine()
 
-        assert interface.janelas[0].ponteiro[0] = 4
+        assert interface.janelas[0].ponteiro[0] == 4
 
         
 
