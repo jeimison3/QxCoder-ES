@@ -17,7 +17,7 @@ class TJanela:
         assert interface.janelas[0].contexto.arquivo.conteudo[0] == list("Teste")
 
 
-    def testRemove:
+    def testRemove():
 
         app = AppContext()
         interface = Interface(app.contextdelivery.contextos, app,breakFlag = True)
@@ -39,7 +39,7 @@ class TJanela:
         assert interface.janelas[0].contexto.arquivo.conteudo[0] == list("Te")
 
     
-    def testLines:
+    def testLines():
 
     	app = AppContext()
         interface = Interface(app.contextdelivery.contextos, app,breakFlag = True)
