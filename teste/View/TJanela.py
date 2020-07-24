@@ -1,9 +1,9 @@
 class TJanela:
 
-	def testAdd():
+    def testAdd():
 
-		app = AppContext()
-		interface = Interface(app.contextdelivery.contextos, app,breakFlag = True)
+        app = AppContext()
+        interface = Interface(app.contextdelivery.contextos, app,breakFlag = True)
         arquivo = "teste.c"
         
         interface.open(arquivo)
@@ -19,7 +19,7 @@ class TJanela:
 
     def testRemove:
 
-    	app = AppContext()
+        app = AppContext()
         interface = Interface(app.contextdelivery.contextos, app,breakFlag = True)
 
         arquivo = "teste.c"
