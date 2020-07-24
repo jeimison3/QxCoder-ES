@@ -13,11 +13,11 @@ class TJanela:
         
         interface.open(arquivo)
 
-        Interface.janelas[0].format.addChar('T')
-        Interface.janelas[0].format.addChar('e')
-        Interface.janelas[0].format.addChar('s')
-        Interface.janelas[0].format.addChar('T')
-        Interface.janelas[0].format.addChar('e')
+        interface.janelas[0].format.addChar('T')
+        interface.janelas[0].format.addChar('e')
+        interface.janelas[0].format.addChar('s')
+        interface.janelas[0].format.addChar('T')
+        interface.janelas[0].format.addChar('e')
 
         assert interface.janelas[0].contexto.arquivo.conteudo[0] == list("Teste")
 
@@ -31,15 +31,15 @@ class TJanela:
         
         interface.open(arquivo)
 
-        Interface.janelas[0].format.addChar('T')
-        Interface.janelas[0].format.addChar('e')
-        Interface.janelas[0].format.addChar('s')
-        Interface.janelas[0].format.addChar('T')
-        Interface.janelas[0].format.addChar('e')
+        interface.janelas[0].format.addChar('T')
+        interface.janelas[0].format.addChar('e')
+        interface.janelas[0].format.addChar('s')
+        interface.janelas[0].format.addChar('T')
+        interface.janelas[0].format.addChar('e')
 
-        Interface.janelas[0].format.removeChar()
-        Interface.janelas[0].format.removeChar()
-        Interface.janelas[0].format.removeChar()
+        interface.janelas[0].format.removeChar()
+        interface.janelas[0].format.removeChar()
+        interface.janelas[0].format.removeChar()
         
         assert interface.janelas[0].contexto.arquivo.conteudo[0] == list("Te")
 
@@ -53,11 +53,11 @@ class TJanela:
         
         interface.open(arquivo)
 
-        Interface.janelas[0].format.addLine()
-        Interface.janelas[0].format.addLine()
-        Interface.janelas[0].format.addLine()
-        Interface.janelas[0].format.addLine()
-        Interface.janelas[0].format.addLine()
+        interface.janelas[0].format.addLine()
+        interface.janelas[0].format.addLine()
+        interface.janelas[0].format.addLine()
+        interface.janelas[0].format.addLine()
+        interface.janelas[0].format.addLine()
 
         
         assert len(interface.janelas[0].contexto.arquivo.conteudo) == 6
