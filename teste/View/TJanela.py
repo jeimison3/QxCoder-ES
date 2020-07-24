@@ -1,3 +1,8 @@
+from classes.controller.appcontext import AppContext
+from classes.controller.contexto import Contexto
+from classes.util.file import File
+from classes.view.interface import Interface
+
 class TJanela:
 
     def testAdd(self):
