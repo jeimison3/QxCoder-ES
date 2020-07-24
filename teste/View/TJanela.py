@@ -16,10 +16,10 @@ class TJanela:
         interface.janelas[0].format.addChar('T')
         interface.janelas[0].format.addChar('e')
         interface.janelas[0].format.addChar('s')
-        interface.janelas[0].format.addChar('T')
+        interface.janelas[0].format.addChar('t')
         interface.janelas[0].format.addChar('e')
 
-        assert interface.janelas[0].contexto.arquivo.conteudo[0] == list("Teste")
+        assert interface.janelas[0].contexto.arquivo.conteudo[0] == "Teste"
 
 
     def testRemove(self):
@@ -41,7 +41,7 @@ class TJanela:
         interface.janelas[0].format.removeChar()
         interface.janelas[0].format.removeChar()
         
-        assert interface.janelas[0].contexto.arquivo.conteudo[0] == list("Te")
+        assert interface.janelas[0].contexto.arquivo.conteudo[0] == "Te"
 
     
     def testLines(self):
