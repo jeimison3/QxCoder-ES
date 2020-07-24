@@ -91,7 +91,7 @@ class TJanela:
         interface.janelas[0].format.addLine()
         interface.janelas[0].format.addLine()
 
-        assert interface.janelas[0].ponteiro[0] == 4
+        assert interface.janelas[0].ponteiro[0] == 5
 
         
 
