@@ -41,7 +41,7 @@ class TJanela:
     
     def testLines():
 
-    	app = AppContext()
+        app = AppContext()
         interface = Interface(app.contextdelivery.contextos, app,breakFlag = True)
 
         arquivo = "teste.c"
