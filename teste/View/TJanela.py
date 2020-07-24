@@ -3,8 +3,7 @@ class TJanela:
 	def testAdd():
 
 		app = AppContext()
-        interface = Interface(app.contextdelivery.contextos, app,breakFlag = True)
-
+		interface = Interface(app.contextdelivery.contextos, app,breakFlag = True)
         arquivo = "teste.c"
         
         interface.open(arquivo)
