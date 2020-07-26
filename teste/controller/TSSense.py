@@ -6,7 +6,7 @@ from classes.controller.appcontext import AppContext
 from classes.controller.contexto import Contexto
 from classes.util.file import File
 
-class TestSSense:
+class TSSense:
 
     def test_ssense_open(self):
         app = AppContext()
