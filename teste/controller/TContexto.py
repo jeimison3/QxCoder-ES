@@ -15,17 +15,21 @@ class TContexto:
         contexto = app.open(pathname,filename)
         assert len(contexto.arquivo.conteudo) == 4
 
-    def setPonteiro(self,l,c):
-        print("> Teste setPonteiro(%s,%s)" % (l,c))
-        self.contexto.ponteiro = [l,c]
+    def test_contexto_set_ponteiro(self):
+        app = AppContext()
+        arquivo = "exemplo/conteudo.txt"
+        pathname, filename = File.splitFilePath(arquivo) 
+        contexto = app.open(pathname,filename)
+        contexto.ponteiro = [1,1]
+        contexto.save()
+        assert contexto.ponteiro[0] == 1 and contexto.ponteiro[1] == 1
 
-    def getPonteiro(self):
-        print("> Teste getPonteiro()")
-        print("Ponteiro (L:%s, C:%s)" % (self.contexto.ponteiro[0],self.contexto.ponteiro[1]))
-
-    def conteudo(self):
-        print("> Teste arquivo.conteudo")
-        print("> ", self.contexto.arquivo.conteudo)
+    def test_contexto_get_ponteiro(self):
+        app = AppContext()
+        arquivo = "exemplo/conteudo.txt"
+        pathname, filename = File.splitFilePath(arquivo) 
+        contexto = app.open(pathname,filename)
+        assert contexto.ponteiro[0] == 1 and contexto.ponteiro[1] == 1
 
     def test_contexto_save(self):
         app = AppContext()
@@ -40,3 +44,10 @@ class TContexto:
         contexto.arquivo.conteudo=[]
         contexto.arquivo.ler()
         assert len(contexto.arquivo.conteudo) == tamInicio
+
+    def test_contexto_conteudo(self):
+        app = AppContext()
+        arquivo = "exemplo/conteudo.txt"
+        pathname, filename = File.splitFilePath(arquivo) 
+        contexto = app.open(pathname,filename)
+        assert contexto.arquivo.conteudo == ["conteudo","1","2","3"]

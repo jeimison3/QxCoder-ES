@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append( os.path.abspath(".") )
+
 from classes.controller.appcontext import AppContext
 from classes.controller.contexto import Contexto
 from classes.util.file import File
@@ -5,76 +9,53 @@ from classes.view.interface import Interface
 
 class TInterface:
     
-
     def testOpen(self):
         app = AppContext()
         interface = Interface(app.contextdelivery.contextos, app,breakFlag = True)
-
-        
-
-        arquivo1 = "teste1.c"
-        arquivo2 = "teste2.c"
-        
+        arquivo1 = "exemplo/teste1.c"
+        arquivo2 = "exemplo/teste2.c"
         interface.open(arquivo1)
         interface.open(arquivo2)
-
         interface.janelas[0].contexto.arquivo.conteudo = "Teste"
         interface.janelas[1].contexto.arquivo.conteudo = "Teste"
 
 
     
     def testWrite(self):
-
         app = AppContext()
-
         interface = Interface(app.contextdelivery.contextos, app,breakFlag = True)
-
-        
-
-        arquivo1 = "teste1.c"
-        arquivo2 = "teste2.c"
-        
+        arquivo1 = "exemplo/teste1.c"
+        arquivo2 = "exemplo/teste2.c"
         interface.open(arquivo1)
         interface.open(arquivo2)
-
         interface.janelas[0].contexto.arquivo.conteudo = "Teste"
         interface.janelas[1].contexto.arquivo.conteudo = "Teste"
-
         for j in interface.janelas:
-
             j.writeRequest()
 
-    def testRead(self):
 
+
+    def testRead(self):
         app = AppContext()
         interface = Interface(app.contextdelivery.contextos, app,breakFlag = True)        
-
-        arquivo1 = "teste1.c"
-        arquivo2 = "teste2.c"
-        
+        arquivo1 = "exemplo/teste1.c"
+        arquivo2 = "exemplo/teste2.c"
         interface.open(arquivo1)
         interface.open(arquivo2)
-
         interface.janelas[0].contexto.arquivo.conteudo = "Teste"
         interface.janelas[1].contexto.arquivo.conteudo = "Teste"
-
         interface.janelas[0].writeRequest()
         interface.janelas[1].writeRequest()
-
 
         del app
         del interface
 
         app = AppContext()
         interface = Interface(app.contextdelivery.contextos, app,breakFlag = True)        
-
-        arquivo1 = "teste1.c"
-        arquivo2 = "teste2.c"
-
+        arquivo1 = "exemplo/teste1.c"
+        arquivo2 = "exemplo/teste2.c"
         interface.open(arquivo1)
         interface.open(arquivo2)
-
-
         assert interface.janelas[0].contexto.arquivo.conteudo == ['T','e','s','t','e']
         assert interface.janelas[1].contexto.arquivo.conteudo == ['T','e','s','t','e']
 

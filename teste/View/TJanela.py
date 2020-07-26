@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append( os.path.abspath(".") )
+
 from classes.controller.appcontext import AppContext
 from classes.controller.contexto import Contexto
 from classes.util.file import File
@@ -9,7 +13,7 @@ class TJanela:
 
         app = AppContext()
         interface = Interface(app.contextdelivery.contextos, app,breakFlag = True)
-        arquivo = "teste.c"
+        arquivo = "exemplo/teste3.c"
         
         interface.open(arquivo)
 
@@ -27,7 +31,7 @@ class TJanela:
         app = AppContext()
         interface = Interface(app.contextdelivery.contextos, app,breakFlag = True)
 
-        arquivo = "teste.c"
+        arquivo = "exemplo/teste3.c"
         
         interface.open(arquivo)
 
@@ -49,7 +53,7 @@ class TJanela:
         app = AppContext()
         interface = Interface(app.contextdelivery.contextos, app,breakFlag = True)
 
-        arquivo = "teste.c"
+        arquivo = "exemplo/teste3.c"
         
         interface.open(arquivo)
 
@@ -67,7 +71,7 @@ class TJanela:
         app = AppContext()
         interface = Interface(app.contextdelivery.contextos, app,breakFlag = True)
 
-        arquivo = "teste.c"
+        arquivo = "exemplo/teste3.c"
         
         interface.open(arquivo)
 
