@@ -15,7 +15,7 @@ class CProcessor:
             return None
 
     @staticmethod
-    def getDefinicao(tx : str, sel:str, terms:list=[";","="]):
+    def getDefinicao(tx : str, sel:str, terms:list=["{","[","=",";"]):
         conteudo = tx.split(sel,1)
         if len(conteudo) == 2:
             for ter in terms:
