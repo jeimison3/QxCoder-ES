@@ -31,13 +31,13 @@ class TSSense:
         retorno = contexto.ssense.getSugestao()
         assert retorno[0].nome == "unsigned"
 
-    def test_ssense_sugest(self):
-        assert True
-        return
-        self.contexto.ponteiro = [20,15] # fun...
-        retorno = self.contexto.ssense.getSugestao()
-        print("Complemento: "+retorno.complemento)
-        print("Possiveis:")
-        for i in retorno.sugestoes:
-            print('->'+i.nome)
+    # def test_ssense_sugest(self):
+    #     assert True
+    #     return
+    #     self.contexto.ponteiro = [20,15] # fun...
+    #     retorno = self.contexto.ssense.getSugestao()
+    #     print("Complemento: "+retorno.complemento)
+    #     print("Possiveis:")
+    #     for i in retorno.sugestoes:
+    #         print('->'+i.nome)
 
