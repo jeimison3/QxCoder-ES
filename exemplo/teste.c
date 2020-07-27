@@ -12,8 +12,10 @@
 /*ABCDE
 Teste de comentário 6.1
 FGHIJ*/
+int teste1 = 2;
 
 void funcao(int i, int j){
+ 
     return i+j;
 }
 

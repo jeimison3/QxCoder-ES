@@ -20,10 +20,12 @@ class DeepSSense:
             self.variaveis.append(
                 CodeCompletion('.',i, '')
             )
+
             # A função padronizaArquivo vai garantir a estrutura abaixo:
             self.variaveis.append(
-                CodeCompletion('.',i+' *', '') # Ponteiro
+                CodeCompletion('.',i+' *', '*') # Ponteiro
             )
+
         self.analisar()
 
     def analisar(self):
@@ -50,6 +52,13 @@ class DeepSSense:
         '''
         padronizado = CProcessor.padronizaArquivo(arquivo.conteudo)
 
+        for linha in padronizado:
+            for var in self.variaveis:
+                if len(var.nome)>0 and (var.nome in linha) and (";" in linha):
+                    cc = CodeCompletion(arquivo.local, CProcessor.getDefinicao(linha, var.nome), 'VAR')
+                    cc.retorno = var.nome
+                    self.variaveis.append(cc)
+        
         # print("#############")
         # for i in padronizado:
         #     print(i)
