@@ -22,6 +22,15 @@ class TSSense:
         contexto = app.open(pathname,filename)
         assert len(contexto.ssense.dess.variaveis) > 0
     
+    def test_ssense_sugest_var(self):
+        app = AppContext()
+        arquivo = "exemplo/teste.c"
+        pathname, filename = File.splitFilePath(arquivo) 
+        contexto = app.open(pathname,filename)
+        contexto.ponteiro = [25,10] # unsign
+        retorno = contexto.ssense.getSugestao()
+        assert retorno[0].nome == "unsigned"
+
     def test_ssense_sugest(self):
         assert True
         return

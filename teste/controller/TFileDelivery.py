@@ -8,7 +8,7 @@ from classes.util.file import File
 
 class TFileDelivery:
 
-    def test_filedelivery_open_one(self):
+    def test_filedelivery_op_one(self):
         fd = FileDelivery()
         arquivo = "exemplo/conteudo.txt"
         pathname, filename = File.splitFilePath(arquivo) 

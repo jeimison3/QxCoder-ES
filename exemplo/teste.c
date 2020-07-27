@@ -23,6 +23,7 @@ int main(){
     printf("Just a test!, %d\n", /* Teste de comentário 8 */ x);
     printf("/* Teste de comentário INCORRETO 1 */\n", x);
     int r = fun
+    unsign
 
     return 0; /* Teste de comentário 9 */
 }
