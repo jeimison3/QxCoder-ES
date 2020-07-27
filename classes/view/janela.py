@@ -27,7 +27,7 @@ class Janela:
             self.contexto.arquivo.conteudo = [""]
 
         
-        self.reserved = ["int","float","double","struct","union","char","void","if","else","return","for","while"]
+        self.reserved = ["int","float","double","struct","union","char","void","if","else","return","for","while","unsigned","short"]
         
         self.macros = ["#define","#include","#pragma","#ifdef","#ifndef","#else"]
 
@@ -39,24 +39,41 @@ class Janela:
         self.format = formating(self)
         
         self.flag_MC = False
+
+        self.typing = ""
         
     def showPrompt(self):
 
-        self.screen.attron(curses.color_pair(4))
+        self.screen.attron(curses.color_pair(6))
 
         c = len(self.dftText(self.ponteiro[1]))
         
-        self.screen.move(self.H - 1,0)
+        self.screen.move(self.ponteiro[0] -self.initL,self.screenCounter+1)
         
-        txt = "HINT:" 
+        txt = "" 
 
-        for i in self.contexto.ssense.getSugestao():
+        tmp = self.contexto.ssense.getSugestao()
 
-            txt = txt + str(i)
+        for i in tmp:
+
+            if self.typing in i.nome and self.typing != "":
+
+                txt = i.nome
+
+                if i.tipo == "STRUCT" or i.tipo == "METHOD":
+
+                    txt = txt+" ("
+                    for j in i.param:
+
+                        txt = txt + " " + j
+                    txt = txt+")"
+
+                break
+
         
-        self.screen.addstr(txt,self.W-1)
+        self.screen.addstr(txt[0:self.W-self.screenCounter-1])
 
-        self.screen.attroff(curses.color_pair(4))
+        self.screen.attroff(curses.color_pair(6))
 
     def writeRequest(self):
 
@@ -230,7 +247,7 @@ class Janela:
             
             elif flag == 5:
                 
-                self.screen.attron(curses.color_pair(4))
+                self.screen.attron(curses.color_pair(6))
                 
             if counter >= self.initC and counter < self.initC + Width-1 and drawed < Width-2:
                 if Num-1 == self.ponteiro[0] and counter ==  self.ponteiro[1]:
@@ -263,7 +280,7 @@ class Janela:
             
             elif flag == 5:
                 
-                self.screen.attroff(curses.color_pair(4))
+                self.screen.attroff(curses.color_pair(6))
             
             
             #desable flags
@@ -390,6 +407,14 @@ class formating:
 
         self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]] = self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]][:self.editor.ponteiro[1]]+str(char)+self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]][self.editor.ponteiro[1]:]
         self.editor.ponteiro[1] = self.editor.ponteiro[1]+1
+
+        if char.isalpha():
+
+            self.editor.typing = self.editor.typing+char
+
+        else:
+
+            self.editor.typing = ""
     
     def fixInitC(self):
 
@@ -496,5 +521,9 @@ class formating:
                     self.editor.ponteiro[0] = self.editor.ponteiro[0]-1
 
                     self.editor.ponteiro[1] = l
+
+        if self.editor.typing != "":
+
+            self.editor.typing = self.editor.typing[0:-1]
         
         self.editor.screen.clear()
