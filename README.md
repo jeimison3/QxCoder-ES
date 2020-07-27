@@ -2,6 +2,9 @@
 A Python3 code editor based on old Vi.
 
 [![Travis Build Status](https://travis-ci.com/jeimison3/QxCoder-ES.svg?branch=master)](https://travis-ci.com/jeimison3/QxCoder-ES)
+[![codecov](https://codecov.io/gh/jeimison3/QxCoder-ES/branch/master/graph/badge.svg)](https://codecov.io/gh/jeimison3/QxCoder-ES)
+
+
 
 ## O que é o QXCoder? ##
 O QXCoder é um editor de código com interface semelhante ao antigo Vi, sendo totalmente escrito em Python3 e com características de uma IDE. Sua principal vantagem está na simplicidade de uso. Conte com a simplicidade dos atalhos de teclado, mas a robustez e praticidade de uma verdadeira IDE.
