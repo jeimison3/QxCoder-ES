@@ -44,28 +44,6 @@ class DeepSSense:
         self.buscaEm(arquivo)
 
 
-    def printPadronizados(self):
-        '''
-        Função de teste.
-        '''
-        self.updateArquivo(self.contexto.arquivo)
-        print("Em: "+self.contexto.arquivo.local)
-        padronizado = CProcessor.padronizaArquivo(self.contexto.arquivo.conteudo)
-        print("#############")
-        for i in padronizado:
-            print(i)
-        print("#############")
-        
-        for i in self.contexto.includes:
-            self.updateArquivo(i)
-            print("Em: "+i.local)
-            padronizado = CProcessor.padronizaArquivo(i.conteudo)
-            print("#############")
-            for i in padronizado:
-                print(i)
-            print("#############")
-        
-
     def buscaEm(self, arquivo:Arquivo):
         '''
         Itera conteúdo buscando definições.\n
