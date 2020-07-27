@@ -57,10 +57,8 @@ class Janela:
         if len(tmp) > 0:
             txt = txt + tmp[0].nome
             if tmp[0].tipo == "STRUCT" or tmp[0].tipo == "METHOD":
-                txt = txt+" ("
-                for j in tmp[0].param:
-                    txt = txt + "," + j
-                txt = txt+")"
+                parametros = ", ".join(tmp[0].params)
+                txt = txt+" ("+parametros+")"
             
         self.screen.addstr(txt[0:self.W-self.screenCounter-1])
 

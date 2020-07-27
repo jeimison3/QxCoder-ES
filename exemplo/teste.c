@@ -15,7 +15,7 @@ FGHIJ*/
 int teste1 = 2;
 
 void funcao(int i, int j){
- 
+    teste
     return i+j;
 }
 
@@ -28,4 +28,13 @@ int main(){
     unsign
 
     return 0; /* Teste de comentário 9 */
+}
+
+void funcao2()
+{
+    Veto
+}
+
+char funcao3(){
+    return 'a';
 }

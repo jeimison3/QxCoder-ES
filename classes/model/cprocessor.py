@@ -15,7 +15,7 @@ class CProcessor:
             return None
 
     @staticmethod
-    def getDefinicao(tx : str, sel:str, terms:list=["{","[","=",";"]):
+    def getDefinicao(tx : str, sel:str, terms:list=["{","[","=",";",",",")"]):
         conteudo = tx.split(sel,1)
         if len(conteudo) == 2:
             for ter in terms:
@@ -27,6 +27,18 @@ class CProcessor:
                     return conteudo[1]
 
         return None
+
+    @staticmethod
+    def contemTipo(tipo : str, linha : str):
+        aceitaveisPre = [" ","(",")",","]
+        aceitaveisPost = [" ","(",")","*"]
+        if tipo in linha:
+            inic = linha.find(tipo)
+            fim = inic+len(tipo)
+            if (inic > 0 and not linha[inic-1] in aceitaveisPre) or (fim+1<len(linha) and not linha[fim] in aceitaveisPost):
+                return False
+            return True
+        return False
 
 
     @staticmethod
@@ -41,11 +53,6 @@ class CProcessor:
                 newI = len(strings)-1
                 tmpConteudo[i]='$$$$$$$$$$$$'
         tmpConteudo = '\"'.join(tmpConteudo).split('\n')
-
-
-        for i in range(len(tmpConteudo)): # Elimina múltiplos espaços
-            while '  ' in tmpConteudo[i]:
-                tmpConteudo[i] = tmpConteudo[i].replace('  ', ' ')
 
 
         ret = []
@@ -79,6 +86,15 @@ class CProcessor:
                         # print('=',i,'ABRT=',comentarioAberto)
                 if len(i) > 0: 
                     ret.append(i)
+
+        simbolos = ["*","!=","==","=","!",";","[","]","(",")","{","}"]
+        for i in range(len(ret)): # Padroniza espaço entre símbolos e nomes
+            for simbolo in simbolos:
+                ret[i] = ret[i].replace(simbolo, ' %s ' % simbolo)
+
+        for i in range(len(tmpConteudo)): # Elimina múltiplos espaços
+            while '  ' in tmpConteudo[i]:
+                tmpConteudo[i] = tmpConteudo[i].replace('  ', ' ')
 
         # Descamuflar strings temporariamente
         tmpConteudo = "\n".join(ret).split("\"")
