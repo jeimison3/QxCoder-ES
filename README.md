@@ -23,11 +23,16 @@ Para executar o editor, use `./main.py [nomeDoArquivo.c]` ou simplesmente `./mai
 ```shell
 git clone https://github.com/jeimison3/QxCoder-ES.git
 cd QxCoder-ES
-pip install -r requirements.txt 
+./main.py [nomeDoArquivo.c]
 ```
 
 
 ### Desenvolvedores
-- Testes podem ser iniciados via `./testes.py`
+### Instalação:
+```shell
+cd QxCoder-ES
+pip install -r requirements.txt 
+```
+- Testes podem ser iniciados via `pytest` ou `python3 -m pytest`.
 
-Para inserir novas bibliotecas usar `pip freeze > requirements.txt`
+Para inserir novas bibliotecas basta inserir em `requirements.txt`.
