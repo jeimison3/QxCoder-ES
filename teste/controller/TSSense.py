@@ -27,8 +27,10 @@ class TSSense:
         arquivo = "exemplo/teste.c"
         pathname, filename = File.splitFilePath(arquivo) 
         contexto = app.open(pathname,filename)
-        contexto.ponteiro = [25,10] # unsign
+        contexto.ponteiro = [27,10] # unsign
         retorno = contexto.ssense.getSugestao()
+        # for itm in retorno:
+        #     print("=>",itm.nome)
         assert retorno[0].nome == "unsigned"
 
     # def test_ssense_sugest(self):
