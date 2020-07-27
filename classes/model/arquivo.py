@@ -12,19 +12,6 @@ class Arquivo:
         if not novo:
             self.ler()
 
-    def setConteudo(self, valor):
-        '''
-        Atribui conteúdo do arquivo
-        '''
-        self.conteudo = valor
-
-    def getConteudo(self):
-        '''
-        Retorna conteúdo do arquivo\n
-        @return Conteúdo
-        '''
-        return self.conteudo
-
     def ler(self):
         '''
         Lê e retorna conteúdo do arquivo\n
