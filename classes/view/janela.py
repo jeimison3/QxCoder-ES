@@ -24,21 +24,23 @@ class Janela:
         self.screenCounter = 0
         self.format = formating(self)
         self.flag_MC = False
+        self.typing = False
 
     def showPrompt(self):
         self.screen.attron(curses.color_pair(6))
         c = len(self.dftText(self.ponteiro[1]))
-        self.screen.move(self.ponteiro[0] -self.initL,self.screenCounter+1)
-        txt = "" 
-        tmp = self.contexto.ssense.getSugestao()
-        if len(tmp) > 0:
-            txt = txt + tmp[0].nome
-            if tmp[0].tipo == "STRUCT" or tmp[0].tipo == "METHOD":
-                txt = txt+" ("
-                for j in tmp[0].param:
-                    txt = txt + "," + j
-                txt = txt+")"
-        self.screen.addstr(txt[0:self.W-self.screenCounter-1])
+        if self.screenCounter < self.W-1:
+            self.screen.move(self.ponteiro[0] -self.initL,self.screenCounter)
+            txt = "" 
+            tmp = self.contexto.ssense.getSugestao()
+            if len(tmp) > 0:
+                txt = txt + tmp[0].nome
+                if tmp[0].tipo == "STRUCT" or tmp[0].tipo == "METHOD":
+                    txt = txt+" ("
+                    for j in tmp[0].param:
+                        txt = txt + "," + j
+                    txt = txt+")"
+            self.screen.addstr(txt[0:self.W-self.screenCounter-1])
         self.screen.attroff(curses.color_pair(6))
 
     def writeRequest(self):
@@ -231,33 +233,11 @@ class Janela:
             if counter <= self.initL+self.H - 1:
                 self.screen.addch('\n')
             counter = counter + 1
-        self.showPrompt()
+        if self.typing:
+        	self.showPrompt()
         self.screen.refresh(0, 0, 0, 0, self.H, self.W)
         self.contexto.ponteiro = self.ponteiro
-                    
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-        
+                        
 class formating:
     
     def __init__(self,editor:Janela):
@@ -266,6 +246,7 @@ class formating:
     def addChar(self,char):
         self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]] = self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]][:self.editor.ponteiro[1]]+str(char)+self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]][self.editor.ponteiro[1]:]
         self.editor.ponteiro[1] = self.editor.ponteiro[1]+1
+        self.editor.typing = True
     
     def fixInitC(self):
         ofs = 0;
@@ -300,6 +281,7 @@ class formating:
             self.editor.initC = c - 1
         else:
             self.editor.initC = 0
+        self.editor.typing = False
         
 
     def nextLine(self):
@@ -308,6 +290,7 @@ class formating:
         if self.editor.ponteiro[1] >= len(self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]]):
             self.editor.ponteiro[1] = len(self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]])
         self.fixInitC()
+        self.editor.typing = False
         
     def backLine(self):
         if self.editor.ponteiro[0] > 0:
@@ -316,13 +299,18 @@ class formating:
         if self.editor.ponteiro[1] >= len(self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]]):    
             self.editor.ponteiro[1] = len(self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]])
         self.fixInitC()
+        self.editor.typing = False
 
     def backChar(self):
         if self.editor.ponteiro[1] > 0:
             self.editor.ponteiro[1] = self.editor.ponteiro[1] - 1
+        self.editor.typing = False
+
     def nextChar(self):
         if self.editor.ponteiro[1] < len(self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]]):
             self.editor.ponteiro[1] = self.editor.ponteiro[1] + 1
+        self.editor.typing = False
+
     def removeChar(self):
         subStr = self.editor.contexto.arquivo.conteudo[:self.editor.ponteiro[0]]
         if len(self.editor.contexto.arquivo.conteudo[self.editor.ponteiro[0]])>0 and self.editor.ponteiro[1] > 0:
@@ -338,3 +326,8 @@ class formating:
                     self.editor.ponteiro[0] = self.editor.ponteiro[0]-1
                     self.editor.ponteiro[1] = l
         self.editor.screen.clear()
+        self.editor.typing = False
+
+    def clickHandler(self):
+            _ , x , y , _ , _  = curses.getmouse()
+            self.addch('a')

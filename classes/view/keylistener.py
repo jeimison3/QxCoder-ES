@@ -21,59 +21,34 @@ class KeyListener:
         pass
 
     def keyListenerThread(self):
-        
-        
-  
-
-        self.interface.drawMainWin() 
-                        
         inp = self.interface.mainScreen.getch()
-
         #Verificando atalho
-            
         if inp == curses.ascii.DC3:
-                
             self.interface.janelas[self.interface.janelaAtiva].writeRequest()
-
             return 1
-            
         elif inp == curses.ascii.ESC:
-                
             return 0
-            
         elif inp == curses.ascii.CAN:
-            
             for janela in self.interface.janelas:
-
                 janela.writeRequest()
-            
             return 0
-                
         elif inp == curses.KEY_RESIZE:
-            
             self.interface.janelas[self.interface.janelaAtiva].screen.clear()
-                
             return 1
-
         elif inp == curses.ascii.SO:
-
             self.interface.janelaAtiva = (self.interface.janelaAtiva + 1) % len(self.interface.janelas)
             self.interface.drawMainWin()
-
             return 1
-
         elif inp == curses.ascii.STX:
-
             self.interface.janelaAtiva = (self.interface.janelaAtiva - 1) % len(self.interface.janelas)
             self.interface.drawMainWin()
-
             return 1
-
         elif inp == curses.ascii.SI:
-
             self.interface.open()
-
             return 1
+
+
+
                 
         if curses.ascii.isprint(inp):
             self.interface.janelas[self.interface.janelaAtiva].format.addChar(chr(inp))
@@ -91,9 +66,11 @@ class KeyListener:
             self.interface.janelas[self.interface.janelaAtiva].format.nextChar()
         elif inp == curses.KEY_BACKSPACE:
             self.interface.janelas[self.interface.janelaAtiva].format.removeChar()
-        
         return 1
+
         
+
+        return 1
                                        
     def triggeredAtalho(self, atalho : Keys):
         '''
