@@ -14,6 +14,10 @@ Para executar o editor, use `./main.py [nomeDoArquivo.c]` ou simplesmente `./mai
 ## Recursos
 - Destaque de cores nas principais estruturas. 
 
+## Sobre o software
+- Teste(s): Unitário (`via TravisCI`)
+- Métrica(s): Cobertura de código (`via codecov`)
+
 ## TODO:
 - Alternar entre arquivos por janelas.
 - Sugestão de código com base nos arquivos do projeto.
