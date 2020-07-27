@@ -15,6 +15,21 @@ class CProcessor:
             return None
 
     @staticmethod
+    def getDefinicao(tx : str, sel:str, terms:list=[";","="]):
+        conteudo = tx.split(sel,1)
+        if len(conteudo) == 2:
+            for ter in terms:
+                if ter in conteudo[1]:
+                    tmp = conteudo[1].split(ter,1)
+                    conteudo.remove(conteudo[1])
+                    conteudo = conteudo+tmp
+                if len(conteudo) == 3:
+                    return conteudo[1]
+
+        return None
+
+
+    @staticmethod
     def padronizaArquivo(conte : list):
         strings = []
 
