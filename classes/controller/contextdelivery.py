@@ -5,14 +5,6 @@ class ContextDelivery:
         self.app = app
         self.contextos = []
 
-    def saveAll(self):
-        for c in self.contextos:
-            c.save()
-    
-    def savePointers(self):
-        for c in self.contextos:
-            c.savePointer()
-
     def open(self, arquivo):
         for cntx in self.contextos:
             if cntx.arquivo == arquivo:
