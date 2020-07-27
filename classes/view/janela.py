@@ -54,17 +54,14 @@ class Janela:
 
         tmp = self.contexto.ssense.getSugestao()
 
-        for i in tmp:
-            #if self.typing in i.nome and self.typing != "":
-            txt = i.nome
-            if i.tipo == "STRUCT" or i.tipo == "METHOD":
+        if len(tmp) > 0:
+            txt = txt + tmp[0].nome
+            if tmp[0].tipo == "STRUCT" or tmp[0].tipo == "METHOD":
                 txt = txt+" ("
-                for j in i.param:
-                    txt = txt + " " + j
+                for j in tmp[0].param:
+                    txt = txt + "," + j
                 txt = txt+")"
-            break
-
-        
+            
         self.screen.addstr(txt[0:self.W-self.screenCounter-1])
 
         self.screen.attroff(curses.color_pair(6))
