@@ -29,7 +29,6 @@ class Janela:
     def showPrompt(self):
         self.screen.attron(curses.color_pair(6))
         c = len(self.dftText(self.ponteiro[1]))
-<<<<<<< HEAD
         if self.screenCounter < self.W-1:
             self.screen.move(self.ponteiro[0] -self.initL,self.screenCounter+1)
             txt = "" 
@@ -42,20 +41,6 @@ class Janela:
                 
             self.screen.addstr(txt[0:self.W-self.screenCounter-1])
 
-=======
-        if self.screenCounter < self.W-1:
-            self.screen.move(self.ponteiro[0] -self.initL,self.screenCounter)
-            txt = "" 
-            tmp = self.contexto.ssense.getSugestao()
-            if len(tmp) > 0:
-                txt = txt + tmp[0].nome
-                if tmp[0].tipo == "STRUCT" or tmp[0].tipo == "METHOD":
-                    txt = txt+" ("
-                    for j in tmp[0].param:
-                        txt = txt + "," + j
-                    txt = txt+")"
-            self.screen.addstr(txt[0:self.W-self.screenCounter-1])
->>>>>>> c1a32fd59071f6c6d75d36fd2c850ed493cd35ef
         self.screen.attroff(curses.color_pair(6))
 
     def writeRequest(self):
