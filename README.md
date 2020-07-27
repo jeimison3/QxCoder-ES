@@ -27,8 +27,7 @@ cd QxCoder-ES
 ```
 
 
-### Desenvolvedores
-### Instalação:
+### Desenvolvimento e testes
 ```shell
 cd QxCoder-ES
 pip install -r requirements.txt 
