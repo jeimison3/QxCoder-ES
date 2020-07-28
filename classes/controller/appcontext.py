@@ -15,7 +15,7 @@ class AppContext:
     def finalizar(self):
         # self.contextdelivery.savePointers()
         # print('Finalizado.')
-        pass
+        return
 
     def open(self, pathcall:str, arquivo:str, canCreate : bool = False):
         '''
@@ -125,6 +125,4 @@ class AppContext:
         
         return contexto
 
-    def saveAll(self):
-        self.contextdelivery.saveAll()
     

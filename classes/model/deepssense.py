@@ -98,7 +98,7 @@ class DeepSSense:
                     nome = splt[j]
                     iLastTipo = j-1
                     while True:
-                        if not splt[iLastTipo-1] in [";", ",", "}" ,"\"",">"] and iLastTipo>0:
+                        if iLastTipo>0 and not splt[iLastTipo-1] in [";", ",", "}" ,"\"",">"]:
                             iLastTipo = iLastTipo -1
                         else: break
                     tipo = " ".join(splt[iLastTipo:j]).strip()
@@ -119,11 +119,11 @@ class DeepSSense:
                     
                     i = j-1 # Ignorar parâmetros dentro do struct
                     if nome == "=": # É atribuição.
-                        pass
+                        continue
                     elif nome == "struct" or (iLastTipo >=0 and splt[iLastTipo] == "struct"):
                         isNamed = nome != "struct"
                         isTypedef = iLastTipo >= 0 and splt[iLastTipo] == "typedef"
-                        
+
                         if possivelNomeSeTypedef >= len(splt):
                             # Está digitando, ainda...
                             continue
@@ -156,14 +156,15 @@ class DeepSSense:
                 isVetor = False
                 isTypedef = False
                 if splt[j] == "]":
-                    while splt[j] != "[": j = j -1
+                    while splt[j] != "[":
+                        j = j -1
                     isVetor = True
                     j = j-1
                 nome = splt[j]
                 # print("NOME?"+nome)
                 iLastTipo = j-1
                 while True:
-                    if not splt[iLastTipo-1] in [";", ",", "{","}" ,"\"",">"] and iLastTipo>0:
+                    if iLastTipo>0 and not splt[iLastTipo-1] in [";", ",", "{","}" ,"\"",">"]:
                         iLastTipo = iLastTipo -1
                     else: break
 

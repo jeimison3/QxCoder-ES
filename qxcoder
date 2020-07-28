@@ -21,7 +21,7 @@ if __name__ == '__main__':
             pathname, filename = File.splitFilePath(arq) 
             app.open(pathname,filename,True)
     except Exception as e:
-        print('Erro no processamento do contexto.')
+        print('Erro durante processamento do contexto.')
         raise e
 
 
@@ -42,7 +42,7 @@ if __name__ == '__main__':
         interface = Interface(app.contextdelivery.contextos, app)
     except Exception as e:
         curses.endwin()
-        print('Erro na interface:')
+        print('Erro ocorrido na interface:')
         raise e
         sys.exit(0)
 
