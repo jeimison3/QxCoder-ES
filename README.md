@@ -35,7 +35,7 @@ pip install -r requirements.txt
 - Testes podem ser iniciados via `pytest` ou `python3 -m pytest`.
 - Testes individuais de classe podem ser feitos via:
 ```shell
-pytest testes/controller/TArquivo.py -s
+pytest teste/controller/TArquivo.py -s
 ```
 
 Para inserir novas bibliotecas basta inserir em `requirements.txt`.

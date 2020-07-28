@@ -24,39 +24,45 @@ class TSSense:
     
     def test_ssense_sugest_var(self):
         app = AppContext()
-        arquivo = "exemplo/teste.c"
+        arquivo = "exemplo/teste_var.h"
         pathname, filename = File.splitFilePath(arquivo) 
         contexto = app.open(pathname,filename)
-        contexto.ponteiro = [27,10] # unsign
+        contexto.ponteiro = [2,5] # unsign
         retorno = contexto.ssense.getSugestao()
-        # for itm in retorno:
-        #     print("=>",itm.nome)
         assert retorno[0].nome == "unsigned"
 
     def test_ssense_sugest_varname(self):
         app = AppContext()
-        arquivo = "exemplo/teste.c"
+        arquivo = "exemplo/teste_var.h"
         pathname, filename = File.splitFilePath(arquivo) 
         contexto = app.open(pathname,filename)
-        contexto.ponteiro = [17,9] # teste
-        retorno = contexto.ssense.getSugestao()
-        # for itm in retorno:
-        #     print("=>",itm.nome+"("+itm.retorno+")")
-        if len(retorno) > 0:
-            assert retorno[0].nome == "teste"
+        
+        contexto.ponteiro = [3,2] # var
+        retorno1 = contexto.ssense.getSugestao()
+
+        contexto.ponteiro = [4,4] # outra_var
+        retorno2 = contexto.ssense.getSugestao()
+
+        if len(retorno1) > 0 and len(retorno2) > 0:
+            assert retorno1[0].nome == "var" and retorno2[0].nome == "outra"
         else: assert False
 
     def test_ssense_sugest_func(self):
         app = AppContext()
-        arquivo = "exemplo/teste.c"
+        arquivo = "exemplo/teste_func.h"
         pathname, filename = File.splitFilePath(arquivo) 
         contexto = app.open(pathname,filename)
-        contexto.ponteiro = [26,15] # fun
-        retorno = contexto.ssense.getSugestao()
-        for itm in retorno:
-            print("=>",itm.nome+"("+itm.retorno+")")
-        if len(retorno) > 0:
-            assert retorno[0].nome == "funcao"
+
+        contexto.ponteiro = [6,3] # noparam
+        retorno1 = contexto.ssense.getSugestao()
+
+        contexto.ponteiro = [7,3] # wparam
+        retorno2 = contexto.ssense.getSugestao()
+
+        for itm in retorno1+retorno2:
+            print("=>",itm.nome, itm.params ,":"+itm.retorno)
+        if len(retorno1) > 0 and len(retorno2) > 0:
+            assert retorno1[0].nome == "noparam" and retorno2[0].nome == "wparam"
         else: assert False
 
 
