@@ -1,0 +1,17 @@
+#!/bin/bash
+exp_dir=$(pwd)
+srcFile=~/.bashrc
+sed --in-place '/QxCoder-ES/d' ${srcFile}
+if [ "$1" = "uninstall" ];
+then
+    source ${srcFile}
+    echo ""
+    echo "Removido."
+    echo ""
+else
+    echo ''  >> ${srcFile}
+    echo 'export PATH=$PATH:'${exp_dir}  >> ${srcFile}
+    source ${srcFile}
+    echo "Instalado."
+    echo "Caso necessário, use './installer uninstall' para remover."
+fi
