@@ -35,7 +35,7 @@ class Janela:
             tmp = self.contexto.ssense.getSugestao()
             if len(tmp) > 0:
                 txt = txt + tmp[0].nome
-                if tmp[0].tipo == "STRUCT" or tmp[0].tipo == "METHOD":
+                if hasattr(tmp[0], 'params'):#tmp[0].tipo == "STRUCT" or tmp[0].tipo == "METHOD":
                     parametros = ", ".join(tmp[0].params)
                     txt = txt+" ("+parametros+")"
                 
