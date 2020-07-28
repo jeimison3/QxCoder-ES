@@ -123,6 +123,10 @@ class DeepSSense:
                     elif nome == "struct" or (iLastTipo >=0 and splt[iLastTipo] == "struct"):
                         isNamed = nome != "struct"
                         isTypedef = iLastTipo >= 0 and splt[iLastTipo] == "typedef"
+                        
+                        if possivelNomeSeTypedef >= len(splt):
+                            # Está digitando, ainda...
+                            continue
                         nome = nome if isNamed else splt[possivelNomeSeTypedef]
                         
                         tipo = "struct"
