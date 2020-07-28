@@ -15,9 +15,9 @@ Para executar o editor, use `./qxcoder [nomeDoArquivo.c]` ou simplesmente `./qxc
 - Métrica(s): Cobertura de código (`via codecov`)
 
 ## TODO:
-- Alternar entre arquivos por janelas.
-- Sugestão de código com base nos arquivos do projeto.
-- Atalhos para copiar e colar.
+- [x] Sugestão de código com base nos arquivos do projeto
+- [ ] Alternar entre arquivos por janelas
+- [ ] Atalhos para copiar e colar
 
 ### Instalação:
 ```shell
