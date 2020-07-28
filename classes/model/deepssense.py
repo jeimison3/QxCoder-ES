@@ -83,6 +83,7 @@ class DeepSSense:
                     if splt[j] == "}": aberto = aberto+1
                     if splt[j] == "{": aberto = aberto-1
                 j = j-1
+                # print("J="+str(j)+" em:"+splt[j])
                 if splt[j] == ")": # É função
                     fimParams = j
                     aberto = 1
@@ -97,7 +98,7 @@ class DeepSSense:
                     nome = splt[j]
                     iLastTipo = j-1
                     while True:
-                        if not splt[iLastTipo-1] in [";", ",", "}" ,"\"",">"]:
+                        if not splt[iLastTipo-1] in [";", ",", "}" ,"\"",">"] and iLastTipo>0:
                             iLastTipo = iLastTipo -1
                         else: break
                     tipo = " ".join(splt[iLastTipo:j]).strip()
@@ -110,16 +111,20 @@ class DeepSSense:
                         cc.retorno = lista[0].nome
                         self.funcoes.append(cc)
 
-                else: # É struct
-                    nome = splt[j]
+                else: # Provavelmente struct
+                    nome = splt[j].strip()
+                    possivelNomeSeTypedef = i+1
                     parametros = splt[j+2:i]
                     iLastTipo = j-1
-                    while True:
-                        if not splt[iLastTipo-1] in [";", ",", "}" ,"\"",">"]:
-                            iLastTipo = iLastTipo -1
-                        else: break
-                    i = j # Ignorar parâmetros dentro do struct
-                    if " ".join(splt[iLastTipo:j]).strip() in ["struct","typedef struct",]:
+                    
+                    i = j-1 # Ignorar parâmetros dentro do struct
+                    if nome == "=": # É atribuição.
+                        pass
+                    elif nome == "struct" or (iLastTipo >=0 and splt[iLastTipo] == "struct"):
+                        isNamed = nome != "struct"
+                        isTypedef = iLastTipo >= 0 and splt[iLastTipo] == "typedef"
+                        nome = nome if isNamed else splt[possivelNomeSeTypedef]
+                        
                         tipo = "struct"
                         j = iLastTipo-1
                         
@@ -129,12 +134,17 @@ class DeepSSense:
                             params[p] = params[p].strip()
                         while "" in params: params.remove("")
 
-                        # print("NOME="+nome +" | TIPO="+tipo +" | PARAMS=",params )
+                        # print("NOME="+nome +" | TIPO="+tipo +" | PARAMS=",params, " | TYPEDEF=" + ("S" if isTypedef else "N") +" | NAMED=" + ("S" if isNamed else "N") )
 
-                        cc = CodeCompletionStruct(arquivo.local, nome, 'STRUCT0', [])
+                        cc = CodeCompletionStruct(arquivo.local,
+                            nome if isTypedef else "struct "+nome
+                        , 'STRUCT', [])
                         cc.params = params
                         cc.retorno = nome
                         self.funcoes.append(cc)
+                    else:
+                        # print("Desconhecido entre ",iLastTipo,"e",j)
+                        pass
 
 
             if splt[i] == "=" or (i > 0 and splt[i] == ";" and splt[i-1] != ")"):
@@ -149,7 +159,7 @@ class DeepSSense:
                 # print("NOME?"+nome)
                 iLastTipo = j-1
                 while True:
-                    if not splt[iLastTipo-1] in [";", ",", "{","}" ,"\"",">"]:
+                    if not splt[iLastTipo-1] in [";", ",", "{","}" ,"\"",">"] and iLastTipo>0:
                         iLastTipo = iLastTipo -1
                     else: break
 
@@ -171,6 +181,7 @@ class DeepSSense:
 
 
             else:
+                # print(str(i)+" ignorado.")
                 continue
 
 

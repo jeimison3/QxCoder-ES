@@ -62,14 +62,27 @@ class TSSense:
 
     def test_ssense_sugest_struct(self):
         app = AppContext()
-        arquivo = "exemplo/teste.c"
+        arquivo = "exemplo/teste_struct.h"
         pathname, filename = File.splitFilePath(arquivo) 
         contexto = app.open(pathname,filename)
-        contexto.ponteiro = [34,8] # Vecto
+        contexto.ponteiro = [9,2] # te _teste
         retorno = contexto.ssense.getSugestao()
         for itm in retorno:
             print("=>",itm.nome,itm.params)
         if len(retorno) > 0:
-            assert retorno[0].nome == "VetorNome"
+            assert retorno[0].nome == "struct teste"
+        else: assert False
+
+    def test_ssense_sugest_typedef_struct(self):
+        app = AppContext()
+        arquivo = "exemplo/teste_struct.h"
+        pathname, filename = File.splitFilePath(arquivo) 
+        contexto = app.open(pathname,filename)
+        contexto.ponteiro = [9,2] # te _teste
+        retorno = contexto.ssense.getSugestao()
+        for itm in retorno:
+            print("=>",itm.nome,itm.params)
+        if len(retorno) > 1:
+            assert retorno[1].nome == "teste2"
         else: assert False
 
