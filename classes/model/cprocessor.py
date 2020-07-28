@@ -1,4 +1,19 @@
 class CProcessor:
+    @staticmethod
+    def getConteudoEntre(tx : str, c:str, c2:str=''):
+        if c2 == '':
+            c2 = c
+        conteudo = tx.split(c,1)
+        if len(conteudo) >= 2:
+            tmp = conteudo[1].split(c2,1)
+            conteudo.remove(conteudo[1])
+            conteudo = conteudo+tmp
+
+        if len(conteudo) == 3:
+            return conteudo[1]
+        else:
+            return None
+
 
     @staticmethod
     def padronizaArquivo(conte : list):
