@@ -17,7 +17,7 @@ class Janela:
         self.initC = self.ponteiro[1]
         self.screen = screen
         if self.contexto.arquivo.conteudo == []:
-            self.contexto.arquivo.conteudo = [""]
+            self.contexto.arquivo.conteudo = [" "]
         self.reserved = ["auto","break","case","char","const","continue","default","do","int","long","register","return","short","signed","sizeof","static","struct","switch","typedef","union","unsigned","void","volatile","while","double","else","enum","extern","float","for","goto","if"]
         self.macros = ["#define","#include","#pragma","#ifdef","#ifndef","#else"]
         self.tabSize = 4
@@ -58,7 +58,7 @@ class Janela:
         pass
     
     def breakWord(self,char):
-        if str(char).isalpha() or char =='.' or char =='-' or char=='>' or char =='_' or char == '#':
+        if str(char).isalpha() or str(char).isnumeric() or char =='_' or char == '#':
             return True
         return False
         
@@ -143,9 +143,14 @@ class Janela:
                         stru.append(u.nome)
                     for u in self.contexto.ssense.dess.typedefs:
                         typ.append(u.nome)
+                    for u in self.contexto.ssense.dess.variaveis:
+                        var.append(u.nome)
+                    for u in self.contexto.ssense.dess.funcoes:
+                        func.append(u.nome)
+                    
                     if l[w] in self.reserved or l[w] in stru or l[w] in typ  :
                         flag = 4
-                    elif l[w] in self.macros:
+                    elif l[w] in self.macros or l[w] in var or l[w] in func:
                         flag = 5
                     else:
                         flag = 0                
@@ -161,7 +166,7 @@ class Janela:
             elif flag == 4:
                 self.screen.attron(curses.color_pair(3))
             elif flag == 5:
-                self.screen.attron(curses.color_pair(6))
+                self.screen.attron(curses.color_pair(7))
                 
             if counter >= self.initC and counter < self.initC + Width-1 and drawed < Width-2:
                 if Num-1 == self.ponteiro[0] and counter ==  self.ponteiro[1]:
