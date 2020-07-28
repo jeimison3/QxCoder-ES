@@ -62,7 +62,6 @@ class Janela:
             return True
         return False
         
-
     def getWords(self,line):
         l = []
         tmp = ""
@@ -134,10 +133,19 @@ class Janela:
             elif colon[0] or scolon[0]:
                 flag = 3
             else:
-                if flag < 4:   
-                    if self.reserved.count(l[w]) > 0:
+                if flag < 4:  
+                    stru=[]
+                    typ=[]
+                    var=[]
+                    func=[]
+
+                    for u in self.contexto.ssense.dess.structs:
+                        stru.append(u.nome)
+                    for u in self.contexto.ssense.dess.typedefs:
+                        typ.append(u.nome)
+                    if l[w] in self.reserved or l[w] in stru or l[w] in typ  :
                         flag = 4
-                    elif self.macros.count(l[w]) > 0:
+                    elif l[w] in self.macros:
                         flag = 5
                     else:
                         flag = 0                
