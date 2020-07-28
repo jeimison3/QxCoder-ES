@@ -9,7 +9,7 @@ A Python3 code editor based on old Vi.
 ## O que é o QXCoder? ##
 O QXCoder é um editor de código com interface semelhante ao antigo Vi, sendo totalmente escrito em Python3 e com características de uma IDE. Sua principal vantagem está na simplicidade de uso. Conte com a simplicidade dos atalhos de teclado, mas a robustez e praticidade de uma verdadeira IDE.
 
-Para executar o editor, use `./main.py [nomeDoArquivo.c]` ou simplesmente `./main.py`
+Para executar o editor, use `./qxcoder [nomeDoArquivo.c]` ou simplesmente `./qxcoder`. Se instalado, use `qxcoder` diretamente.
 
 ## Recursos
 - Destaque de cores nas principais estruturas. 
