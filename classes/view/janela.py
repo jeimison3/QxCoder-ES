@@ -17,7 +17,7 @@ class Janela:
         self.initC = self.ponteiro[1]
         self.screen = screen
         if self.contexto.arquivo.conteudo == []:
-            self.contexto.arquivo.conteudo = [" "]
+            self.contexto.arquivo.conteudo = [""]
         self.reserved = ["auto","break","case","char","const","continue","default","do","int","long","register","return","short","signed","sizeof","static","struct","switch","typedef","union","unsigned","void","volatile","while","double","else","enum","extern","float","for","goto","if"]
         self.macros = ["#define","#include","#pragma","#ifdef","#ifndef","#else"]
         self.tabSize = 4
