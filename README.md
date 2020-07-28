@@ -27,7 +27,7 @@ Para executar o editor, use `./qxcoder [nomeDoArquivo.c]` ou simplesmente `./qxc
 ```shell
 git clone https://github.com/jeimison3/QxCoder-ES.git
 cd QxCoder-ES
-./qxcoder [nomeDoArquivo.c]
+./tools/installer
 ```
 
 
