@@ -1,9 +1,8 @@
-# QXCoder-ES
-A Python3 code editor based on old Vi.
-
-[![Travis Build Status](https://travis-ci.com/jeimison3/QxCoder-ES.svg?branch=master)](https://travis-ci.com/jeimison3/QxCoder-ES)
-[![codecov](https://codecov.io/gh/jeimison3/QxCoder-ES/branch/master/graph/badge.svg)](https://codecov.io/gh/jeimison3/QxCoder-ES)
-
+<p align="center">
+  <h1>QXCoder</h1>
+  <a href="https://travis-ci.com/jeimison3/QxCoder-ES" target="_blank"><img alt="Travis Build Status" src="https://travis-ci.com/jeimison3/QxCoder-ES.svg?branch=master" /></a>
+  <a href="https://travis-ci.com/jeimison3/QxCoder-ES" target="_blank"><img alt="codecov" src="https://codecov.io/gh/jeimison3/QxCoder-ES/branch/master/graph/badge.svg" /></a>
+</p>
 
 
 ## O que é o QXCoder? ##
