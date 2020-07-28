@@ -53,8 +53,8 @@ class TSSense:
         contexto = app.open(pathname,filename)
         contexto.ponteiro = [26,15] # fun
         retorno = contexto.ssense.getSugestao()
-        # for itm in retorno:
-        #     print("=>",itm.nome+"("+itm.retorno+")")
+        for itm in retorno:
+            print("=>",itm.nome+"("+itm.retorno+")")
         if len(retorno) > 0:
             assert retorno[0].nome == "funcao"
         else: assert False
@@ -67,8 +67,8 @@ class TSSense:
         contexto = app.open(pathname,filename)
         contexto.ponteiro = [34,8] # Vecto
         retorno = contexto.ssense.getSugestao()
-        # for itm in retorno:
-        #     print("=>",itm.nome+"("+itm.retorno+")")
+        for itm in retorno:
+            print("=>",itm.nome,itm.params)
         if len(retorno) > 0:
             assert retorno[0].nome == "VetorNome"
         else: assert False

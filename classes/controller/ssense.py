@@ -41,7 +41,7 @@ class SSense: # Equivalente ao IntelliSense
 
         cColInicial = cColFinal
         for char in reversed(range(cColFinal)):
-            if self.contexto.arquivo.conteudo[cLine][char] == ' ':
+            if self.contexto.arquivo.conteudo[cLine][char] in [" ","\t"]:
                 cColInicial = char+1
                 break
             if char == 0:

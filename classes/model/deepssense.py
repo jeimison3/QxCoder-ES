@@ -57,6 +57,7 @@ class DeepSSense:
         padronizado = CProcessor.padronizaArquivo(arquivo.conteudo)
         listaTipos = self.funcoes + self.typedefs + self.structs + self.variaveis
 
+
         arqv = " ".join(padronizado)
         splt = arqv.split(" ")
 

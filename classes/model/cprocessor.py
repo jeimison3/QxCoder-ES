@@ -21,6 +21,7 @@ class CProcessor:
 
         # Camuflar strings temporariamente
         tmpConteudo = "\n".join(conte).split("\"")
+        
         for i in range(len(tmpConteudo)):
             if i%2 == 1:
                 strings.append( tmpConteudo[i] )
@@ -61,14 +62,6 @@ class CProcessor:
                 if len(i) > 0: 
                     ret.append(i)
 
-        simbolos = ["*","!=","==","=","!",";","[","]","(",")","{","}"]
-        for i in range(len(ret)): # Padroniza espaço entre símbolos e nomes
-            for simbolo in simbolos:
-                ret[i] = ret[i].replace(simbolo, ' %s ' % simbolo)
-
-        for i in range(len(tmpConteudo)): # Elimina múltiplos espaços
-            while '  ' in tmpConteudo[i]:
-                tmpConteudo[i] = tmpConteudo[i].replace('  ', ' ')
 
         # Descamuflar strings temporariamente
         tmpConteudo = "\n".join(ret).split("\"")
@@ -76,6 +69,18 @@ class CProcessor:
             if i%2 == 1:
                 if tmpConteudo[i] == "$$$$$$$$$$$$":
                     tmpConteudo[i] = strings[i//2]
+        
+        simbolos = ["*","!=","==","=","!",";","[","]","(",")","{","}"]
+        for i in range(len(tmpConteudo)): # Padroniza espaço entre símbolos e nomes
+            for simbolo in simbolos:
+                tmpConteudo[i] = tmpConteudo[i].replace(simbolo, ' %s ' % simbolo)
+
+        for i in range(len(tmpConteudo)): # Elimina múltiplos espaços
+            while '  ' in tmpConteudo[i]:
+                tmpConteudo[i] = tmpConteudo[i].replace('\t', ' ')
+                tmpConteudo[i] = tmpConteudo[i].replace('  ', ' ')
+        
+        # Retorna ao formato original
         tmpConteudo = '\"'.join(tmpConteudo).split('\n')
 
         return tmpConteudo
