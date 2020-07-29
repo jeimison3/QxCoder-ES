@@ -15,6 +15,14 @@ class TSSense:
         contexto = app.open(pathname,filename)
         assert len(contexto.arquivo.conteudo) > 0
 
+    def test_ssense_open_update(self):
+        app = AppContext()
+        arquivo = "exemplo/teste.c"
+        pathname, filename = File.splitFilePath(arquivo) 
+        contexto = app.open(pathname,filename)
+        contexto.ssense.update( contexto.includes[0] )
+        assert True
+
     def test_ssense_vars(self):
         app = AppContext()
         arquivo = "exemplo/conteudo.txt"
