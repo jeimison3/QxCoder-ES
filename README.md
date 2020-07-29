@@ -37,5 +37,9 @@ pip install -r requirements.txt
 ```shell
 pytest teste/controller/TArquivo.py -s
 ```
+- Cobertura(coverage) pode ser analisada linha por linha via:
+```shell
+pytest --cov-report term-missing
+```
 
 Para inserir novas bibliotecas basta inserir em `requirements.txt`.
